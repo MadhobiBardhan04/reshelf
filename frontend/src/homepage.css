@@ -1,0 +1,349 @@
+.homepage {
+  width: 100%;
+  min-height: 100vh;
+}
+.navbar {
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  background-position: left;
+  margin-top: 0px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.navbar h2 {
+  margin-left: 40px;
+  margin-top: 40px;
+  color: #006994;
+}
+
+.SearchBar_header1 input {
+  position: relative;
+  top: -40px;
+  color: aliceblue;
+  color: black;
+  width: 560px;
+  height: 50px;
+  border-radius: 20px;
+  padding-left: 40px;
+  border: 1px solid black;
+  margin-left: 300px;
+}
+
+.Search_icon_0 {
+  position: absolute;
+  left: 315px;
+  top: 55px;
+  color: black;
+  z-index: 1;
+}
+
+.sell_btn {
+  background-color: #006994;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 1000px;
+  font-size: 15px;
+  position: relative;
+  left: 940px;
+  top: -85px;
+}
+
+.sign_in_btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  position: relative;
+  left: 970px;
+  top: -85px;
+}
+
+.profile_btn {
+  background-color: #15172b;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 1000px;
+  font-size: 15px;
+  position: relative;
+  left: 1000px;
+  top: -85px;
+}
+
+.cart_btn {
+  background-color: #15172b;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 930px;
+  font-size: 15px;
+  position: relative;
+  left: 700px;
+  top: -85px;
+}
+
+.header {
+  width: 100%;
+  height: 300px;
+  background-color: #006994;
+  background-position: left;
+  margin-top: -60px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.SearchBar_header input {
+  margin-top: 30px;
+  color: aliceblue;
+  color: black;
+  width: 560px;
+  height: 50px;
+  border-radius: 20px;
+  padding-left: 40px;
+  border: 1px solid black;
+}
+
+.Search_icon {
+  position: relative;
+  left: 30px;
+  top: 4px;
+}
+
+.Button_header {
+  margin-left: 15px;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 20px;
+  padding-left: 80px;
+  border: 1px solid black;
+}
+
+.Button_header h3 {
+  margin-left: -85px;
+  color: black;
+}
+
+.footer {
+  width: 100%;
+  height: 450px;
+  background-color: #15172b;
+  background-position: left;
+  margin-top: 270px;
+  padding-top: 100px;
+}
+
+.first_column {
+  margin-left: 40px;
+}
+
+.first_column h3 {
+  color: white;
+}
+
+.first_column h4:first-of-type {
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  color: #e5e7eb;
+  opacity: 0.75;
+  margin-top: 10px;
+}
+
+.first_column h4 {
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  color: #e5e7eb;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.first_column h5 {
+  font-family: "Mozilla Text", serif;
+  font-size: 10px;
+  color: #e5e7eb;
+  opacity: 0.5;
+  margin-top: 15px;
+}
+
+.download_logo {
+  display: flex;
+  gap: 8px;
+}
+.download_icon {
+  font-size: 10px;
+  position: relative;
+  color: white;
+  opacity: 0.5;
+  left: 1px;
+  top: 15px;
+}
+
+.second_column {
+  margin-left: 280px;
+  margin-top: -120px;
+}
+
+.second_column h3 {
+  color: white;
+}
+
+.second_column h4 {
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  color: #e5e7eb;
+  opacity: 0.75;
+  margin-top: 8px;
+}
+
+.third_column {
+  margin-left: 500px;
+  margin-top: -135px;
+}
+
+.third_column h3 {
+  color: white;
+}
+
+.third_column h4 {
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  color: #e5e7eb;
+  opacity: 0.75;
+  margin-top: 8px;
+}
+
+.fourth_column {
+  margin-left: 700px;
+  margin-top: -135px;
+}
+
+.fourth_column h3 {
+  color: white;
+}
+
+.fourth_column h4 {
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  color: #e5e7eb;
+  opacity: 0.75;
+  margin-top: 8px;
+}
+
+.fifth_column {
+  margin-left: 900px;
+  margin-top: -90px;
+}
+
+.fifth_column h3 {
+  color: white;
+}
+
+.fifth_column h4 {
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  color: #e5e7eb;
+  opacity: 0.75;
+  margin-top: 8px;
+}
+
+.sixth_column {
+  margin-left: 1080px;
+  margin-top: -134px;
+}
+
+.sixth_column h3 {
+  color: white;
+}
+
+.sixth_column h4 {
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  color: #e5e7eb;
+  opacity: 0.75;
+  margin-top: 8px;
+}
+
+.Additional_things {
+  margin-top: 80px;
+  width: 90%;
+  margin-left: 40px;
+  opacity: 0.35;
+}
+
+.Additional_things h4:first-of-type {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: white;
+  opacity: 1;
+  margin-left: 870px;
+  margin-top: 15px;
+}
+.Additional_things h4:nth-of-type(2) {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: white;
+  opacity: 1;
+  margin-left: 200px;
+  margin-top: 30px;
+}
+.Additional_things h4:nth-of-type(3) {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: white;
+  opacity: 1;
+  margin-left: 270px;
+  margin-top: 1px;
+}
+.Additional_things h4:nth-of-type(4) {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: white;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 20px;
+  margin-top: -80px;
+}
+.Additional_things h4:nth-of-type(5) {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: white;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 100px;
+  margin-top: -14px;
+}
+.Additional_things h4:nth-of-type(6) {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: white;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 200px;
+  margin-top: -14px;
+}
+
+.YouTube_icon {
+  font-size: 14px;
+}
+.Facebook_icon {
+  font-size: 14px;
+}
+.Globe_icon {
+  font-size: 14px;
+}
