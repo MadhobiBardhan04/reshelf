@@ -7,34 +7,13 @@ import { FaGlobe } from "react-icons/fa";
 import { FaTag } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-
+import { getProducts } from "./data/products.jsx";
 function HomePage() {
+  const products = getProducts();
   return (
     <div className="homepage">
-      <div className="navbar">
-        <h2> reshalf </h2>
-      </div>
-      <div className="search_box">
-        <div className="SearchBar_header1">
-          <FaSearch className="Search_icon_0" />
-          <input type="text" placeholder="search for items" />
-        </div>
-        <button className="sell_btn">
-          <FaTag className="Tag_icon" />
-        </button>
-
-        <button className="sign_in_btn">sign in</button>
-
-        <button className="profile_btn">
-          <FaUser className="profile_icon" />
-        </button>
-
-        <button className="cart_btn">
-          <FaShoppingCart className="cart_icon" />
-        </button>
-      </div>
       <div className="header">
-        <h1 font-size="large" color="black">
+        <h1 font-size="large" color="white">
           Buy & Sell Student Essentials
         </h1>
         <h2 font-size="large" color="black">
@@ -43,13 +22,24 @@ function HomePage() {
         </h2>
         <div className="SearchBar_header">
           <FaSearch className="Search_icon" />
-          <input type="text" placeholder="search for items" />
+          <input type="text" placeholder="What are you looking for?" />
           <button className="Button_header">
             <h3>Search</h3>
           </button>
         </div>
       </div>
-
+      <div className="featured_products">
+        <h2>Featured Items</h2>
+        <div className="product_grid">
+          {products.slice(0, 8).map((product) => (
+            <div className="product_card" key={product.id}>
+              <img src={product.image} alt={product.name} />
+              <h4>{product.name}</h4>
+              <p>BDT {product.price}</p>
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="footer">
         <div className="first_column">
           <h3> ReShelf </h3>

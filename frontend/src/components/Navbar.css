@@ -1,0 +1,123 @@
+:root {
+  --font-display: "Outfit", serif;
+  --font-body: "Inter", sans-serif;
+
+  --color-deep: #005f8f;
+  --color-navy: #083f75;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-navy);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+}
+
+.logo-link {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-deep);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.logo-link:visited,
+.logo-link:hover {
+  color: var(--color-deep);
+  text-decoration: none;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  height: 80px;
+  z-index: 100;
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.SearchBar_header1 {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-deep);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  flex: 1;
+  max-width: 900px;
+  min-width: 0;
+  transition: max-width 0.2s ease;
+}
+.SearchBar_header1 input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 0.5rem;
+}
+
+.nav_actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+@media (max-width: 900px) {
+  .SearchBar_header1 {
+    max-width: 220px;
+  }
+}
+@media (max-width: 600px) {
+  .SearchBar_header1 {
+    max-width: 140px;
+  }
+  .SearchBar_header1 input::placeholder {
+    font-size: 0.8rem;
+  }
+}
+
+.sell_btn,
+.sign_in_btn,
+.profile_btn,
+.cart_btn {
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.sell_btn {
+  background-color: var(--color-deep);
+  color: white;
+  padding: 0 1.2rem;
+}
+
+.sign_in_btn {
+  background: white;
+  color: var(--color-navy);
+  border: 1px solid var(--color-deep);
+  padding: 0 1.2rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.profile_btn,
+.cart_btn {
+  width: 40px;
+  background: var(--color-deep);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -2,98 +2,11 @@
   width: 100%;
   min-height: 100vh;
 }
-.navbar {
-  width: 100%;
-  height: 80px;
-  background-color: white;
-  background-position: left;
-  margin-top: 0px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.navbar h2 {
-  margin-left: 40px;
-  margin-top: 40px;
-  color: #006994;
-}
-
-.SearchBar_header1 input {
-  position: relative;
-  top: -40px;
-  color: aliceblue;
-  color: black;
-  width: 560px;
-  height: 50px;
-  border-radius: 20px;
-  padding-left: 40px;
-  border: 1px solid black;
-  margin-left: 300px;
-}
-
-.Search_icon_0 {
-  position: absolute;
-  left: 315px;
-  top: 55px;
-  color: black;
-  z-index: 1;
-}
-
-.sell_btn {
-  background-color: #006994;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 1000px;
-  font-size: 15px;
-  position: relative;
-  left: 940px;
-  top: -85px;
-}
-
-.sign_in_btn {
-  background-color: black;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 15px;
-  cursor: pointer;
-  position: relative;
-  left: 970px;
-  top: -85px;
-}
-
-.profile_btn {
-  background-color: #15172b;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 1000px;
-  font-size: 15px;
-  position: relative;
-  left: 1000px;
-  top: -85px;
-}
-
-.cart_btn {
-  background-color: #15172b;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 930px;
-  font-size: 15px;
-  position: relative;
-  left: 700px;
-  top: -85px;
-}
 
 .header {
   width: 100%;
-  height: 300px;
-  background-color: #006994;
+  height: 380px;
+  background-color: var(--color-deep);
   background-position: left;
   margin-top: -60px;
 
@@ -101,6 +14,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.header h1 {
+  color: white;
+}
+.header h2 {
+  color: lightskyblue;
+  font-weight: 400;
 }
 .SearchBar_header input {
   margin-top: 30px;
@@ -133,6 +53,48 @@
   margin-left: -85px;
   color: black;
 }
+/*this is for featured products*/
+.featured_products {
+  padding: 3rem 2rem;
+}
+.featured_products h2 {
+  color: var(--color-navy);
+  margin-bottom: 1.5rem;
+}
+
+.product_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.product_card {
+  border: 1px solid gray;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.product_card:hover {
+  box-shadow: 0 6px 16px rgba(0, 95, 143, 0.15);
+}
+.product_card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.product_card h4,
+.product_card p {
+  padding: 0 0.75rem;
+  font-family: sans-serif;
+}
+.product_card p {
+  color: grey;
+  font-weight: 600;
+  font-size: small;
+  padding-top: 0.65rem;
+  padding-bottom: 0.75rem;
+}
+
+/*end of it*/
 
 .footer {
   width: 100%;
