@@ -29,7 +29,7 @@ function HomePage() {
         </div>
       </div>
       <div className="featured_products">
-        <h2>Featured Items</h2>
+        <h2>Featured Products</h2>
         <div className="product_grid">
           {products.slice(0, 8).map((product) => (
             <div className="product_card" key={product.id}>

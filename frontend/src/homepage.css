@@ -4,9 +4,10 @@
 }
 
 .header {
+  font-family: "Outfit", sans-serif;
   width: 100%;
   height: 380px;
-  background-color: var(--color-deep);
+  background-color: #083f75;
   background-position: left;
   margin-top: -60px;
 
@@ -58,6 +59,7 @@
   padding: 3rem 2rem;
 }
 .featured_products h2 {
+  font-family: "Outfit", sans-serif;
   color: var(--color-navy);
   margin-bottom: 1.5rem;
 }
@@ -81,10 +83,13 @@
   aspect-ratio: 1/1;
   object-fit: cover;
 }
+.product_card h4 {
+  color: var(--color-navy);
+}
 .product_card h4,
 .product_card p {
   padding: 0 0.75rem;
-  font-family: sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .product_card p {
   color: grey;

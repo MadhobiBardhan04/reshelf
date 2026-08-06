@@ -1,21 +1,8 @@
 :root {
-  --font-display: "Outfit", serif;
-  --font-body: "Inter", sans-serif;
-
   --color-deep: #005f8f;
   --color-navy: #083f75;
-}
-
-body {
-  font-family: var(--font-body);
-  color: var(--color-navy);
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
+  --font-display: "Outfit", serif;
+  --font-body: "Inter", sans-serif;
 }
 
 .logo-link {
@@ -33,6 +20,9 @@ h4 {
 }
 
 .navbar {
+  --font-display: "Outfit", serif;
+  --font-body: "Inter", sans-serif;
+
   position: sticky;
   top: 0;
   height: 80px;
@@ -94,6 +84,7 @@ h4 {
   cursor: pointer;
   font-weight: 600;
   font-size: 15px;
+  font-family: "Outfit", sans-serif;
 }
 
 .sell_btn {
