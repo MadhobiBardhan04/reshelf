@@ -8,6 +8,9 @@ import Sell from "./pages/sell.jsx";
 import ProductDetails from "./pages/ProductDetails";
 import CategoryPage from "./CategoryPage";
 import AllListings from "./pages/AllListings";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Favorites from "./pages/Favorites.jsx";
 function App() {
   return (
     <div className="app">
@@ -20,6 +23,10 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/listings" element={<AllListings />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/favorites" element={<Favorites />}
+/>
       </Routes>
     </div>
   );
