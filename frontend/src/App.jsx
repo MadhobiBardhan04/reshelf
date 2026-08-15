@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar.jsx";
 import Sell from "./pages/sell.jsx";
 import ProductDetails from "./pages/ProductDetails";
 import CategoryPage from "./CategoryPage";
+import AllListings from "./pages/AllListings";
 function App() {
   return (
     <div className="app">
@@ -18,6 +19,7 @@ function App() {
         <Route path="/checkout" element={<Cart />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/category/:category" element={<CategoryPage />} />
+        <Route path="/listings" element={<AllListings />} />
       </Routes>
     </div>
   );

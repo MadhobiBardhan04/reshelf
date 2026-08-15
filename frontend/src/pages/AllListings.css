@@ -1,0 +1,47 @@
+.all_listings {
+  padding: 40px;
+}
+
+.all_listings_header {
+  margin-bottom: 30px;
+}
+
+.all_listings_header h1 {
+  color: #083f75;
+  margin-bottom: 5px;
+}
+
+.all_listings_header p {
+  color: #666;
+}
+
+.all_listings .product_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.all_listings .product_card {
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.all_listings .product_card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.all_listings .product_card h4,
+.all_listings .product_card p {
+  margin: 10px 15px;
+}
+
+.all_listings .product_card p {
+  color: #083f75;
+  font-weight: bold;
+}
