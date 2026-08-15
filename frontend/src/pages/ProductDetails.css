@@ -3,9 +3,6 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-}
-
-.pd_top {
   display: flex;
   gap: 3rem;
   align-items: flex-start;
@@ -13,7 +10,7 @@
 
 .pd_gallery {
   flex: 1.2;
-  position: sticky;
+
   top: 100px;
 }
 
@@ -153,12 +150,6 @@
   padding: 10px 14px;
   border-radius: 12px;
   width: 300px;
-}
-
-.pd_message_btn {
-  font-size: 1.05rem;
-  padding: 1rem 2rem;
-  width: 100%;
 }
 
 .pd_tabs_section {

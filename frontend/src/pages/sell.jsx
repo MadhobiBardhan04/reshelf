@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./sell.css";
+import Auth from "./auth";
 import { CATEGORIES, CONDITIONS } from "../data/constants";
 
 export default function Sell() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true",
+  );
   const [form, setForm] = useState({
     name: "",
     category: "",
@@ -40,8 +45,19 @@ export default function Sell() {
     }
     const listing = { ...form, images, id: Date.now() };
     console.log("New listing:", listing);
-    // TODO: replace with POST /api/listings once backend exists
+    //backend work here later
   };
+  if (!isLoggedIn) {
+    return (
+      <div className="not_signin">
+        <h2>Sign in to sell an item</h2>
+        <p>You need an account to list a product on ReShelf.</p>
+        <Link to="/auth" className="sell_sign_in_btn">
+          Sign in
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="sell_page">

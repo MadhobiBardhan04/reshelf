@@ -6,7 +6,7 @@ import Cart from "./pages/cart.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Sell from "./pages/sell.jsx";
 import ProductDetails from "./pages/ProductDetails";
-import CategoryPage from "./CategoryPage";
+import CategoryPage from "./pages/Categorypage.jsx";
 import AllListings from "./pages/AllListings";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
@@ -25,8 +25,7 @@ function App() {
         <Route path="/listings" element={<AllListings />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/favorites" element={<Favorites />}
-/>
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </div>
   );

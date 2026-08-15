@@ -23,85 +23,82 @@ export default function ProductDetails() {
 
   return (
     <div className="product_details">
-      <div className="pd_top">
-        <div className="pd_gallery">
-          <div className="pd_main_image">
-            <span className="pd_image_count">
-              {activeImage + 1} / {images.length}
-            </span>
-            {images.length > 1 && (
-              <>
-                <button className="pd_nav prev" onClick={prevImage}>
-                  <FaChevronLeft />
-                </button>
-                <button className="pd_nav next" onClick={nextImage}>
-                  <FaChevronRight />
-                </button>
-              </>
-            )}
-            <img src={images[activeImage]} alt={name} />
-          </div>
-
+      <div className="pd_gallery">
+        <div className="pd_main_image">
+          <span className="pd_image_count">
+            {activeImage + 1} / {images.length}
+          </span>
           {images.length > 1 && (
-            <div className="pd_thumbs">
-              {images.map((src, i) => (
-                <button
-                  key={i}
-                  className={`pd_thumb ${i === activeImage ? "active" : ""}`}
-                  onClick={() => setActiveImage(i)}
-                >
-                  <img src={src} alt="" />
-                </button>
-              ))}
-            </div>
+            <>
+              <button className="pd_nav prev" onClick={prevImage}>
+                <FaChevronLeft />
+              </button>
+              <button className="pd_nav next" onClick={nextImage}>
+                <FaChevronRight />
+              </button>
+            </>
           )}
+          <img src={images[activeImage]} alt={name} />
         </div>
 
-        <div className="pd_info">
-          {/*<span className="pd_category_tag">{category}</span>*/}
-          <h1>{name}</h1>
-          <p className="pd_price">BDT {price}</p>
-
-          <div className="pd_attrs">
-            <div>
-              <span className="pd_attr_label">Condition</span>
-              <span className="pd_attr_value">{condition}</span>
-            </div>
-            <div>
-              <span className="pd_attr_label">Category</span>
-              <span className="pd_attr_value">{category}</span>
-            </div>
+        {images.length > 1 && (
+          <div className="pd_thumbs">
+            {images.map((src, i) => (
+              <button
+                key={i}
+                className={`pd_thumb ${i === activeImage ? "active" : ""}`}
+                onClick={() => setActiveImage(i)}
+              >
+                <img src={src} alt="" />
+              </button>
+            ))}
           </div>
+        )}
+      </div>
 
-          <button className="pd_add_btn">Add to cart</button>
-          <div className="pd_tabs_section">
-            <div className="pd_tabs">
-              {TABS.map((tab) => (
-                <button
-                  key={tab}
-                  className={`pd_tab ${activeTab === tab ? "active" : ""}`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            <div className="pd_tab_content">
-              {activeTab === "Specifications" && <p>{specs}</p>}
-              {activeTab === "Description" && (
-                <p>{description || "No description provided."}</p>
-              )}
-            </div>
+      <div className="pd_info">
+        <h1>{name}</h1>
+        <p className="pd_price">BDT {price}</p>
+
+        <div className="pd_attrs">
+          <div>
+            <span className="pd_attr_label">Condition</span>
+            <span className="pd_attr_value">{condition}</span>
           </div>
+          <div>
+            <span className="pd_attr_label">Category</span>
+            <span className="pd_attr_value">{category}</span>
+          </div>
+        </div>
 
-          <div className="pd_seller">
-            <div className="pd_seller_icon">
-              <FaStore />
-            </div>
-            <div>
-              <p className="pd_seller_name">Sunny Sky</p>
-              <p className="pd_seller_sub">Seller</p>
-            </div>
+        <button className="pd_add_btn">Add to cart</button>
+        <div className="pd_tabs_section">
+          <div className="pd_tabs">
+            {TABS.map((tab) => (
+              <button
+                key={tab}
+                className={`pd_tab ${activeTab === tab ? "active" : ""}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <div className="pd_tab_content">
+            {activeTab === "Specifications" && <p>{specs}</p>}
+            {activeTab === "Description" && (
+              <p>{description || "No description provided."}</p>
+            )}
+          </div>
+        </div>
+
+        <div className="pd_seller">
+          <div className="pd_seller_icon">
+            <FaStore />
+          </div>
+          <div>
+            <p className="pd_seller_name">Sunny Sky</p>
+            <p className="pd_seller_sub">Seller</p>
           </div>
         </div>
       </div>
