@@ -54,6 +54,93 @@
   margin-left: -85px;
   color: black;
 }
+/*for browse catagories*/
+.browse_categories h2,
+.featured_products h2 {
+  font-family: "Outfit", sans-serif;
+  color: var(--color-navy);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+.browse_categories {
+  width: 100%;
+  padding: 3rem 2rem;
+}
+.categories_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.category_card {
+  height: 145px;
+  background-color: white;
+  border: 1px solid #d9e0e7;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.category_card:hover {
+  transform: translateY(-5px);
+  border-color: #16835f;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.category_icon {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  background-color: #e8f6f0;
+  color: #16835f;
+
+  font-size: 25px;
+
+  margin-bottom: 12px;
+}
+.category_card h3 {
+  margin: 0;
+
+  font-family: "Outfit", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+
+  color: var(--color-navy);
+
+  text-align: center;
+}
+@media (max-width: 900px) {
+
+  .categories_grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+@media (max-width: 500px) {
+
+  .browse_categories {
+    width: 100%;
+    padding: 3rem 2rem;
+    box-sizing: border-box;
+  }
+
+  .categories_grid {
+    grid-template-columns: 1fr;
+  }
+
+}
 /*this is for featured products*/
 .featured_products {
   padding: 3rem 2rem;

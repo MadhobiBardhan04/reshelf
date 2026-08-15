@@ -4,8 +4,13 @@ import HomePage from "./homepage";
 import Auth from "./pages/auth.jsx";
 import Cart from "./pages/cart.jsx";
 import Navbar from "./components/Navbar.jsx";
+<<<<<<< Updated upstream
 import Sell from "./pages/sell.jsx";
 import ProductDetails from "./pages/ProductDetails";
+=======
+import CategoryPage from "./CategoryPage";
+
+>>>>>>> Stashed changes
 function App() {
   return (
     <div className="app">
@@ -15,7 +20,12 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/sell" element={<Sell />} />
         <Route path="/checkout" element={<Cart />} />
+<<<<<<< Updated upstream
         <Route path="/products/:id" element={<ProductDetails />} />
+=======
+        <Route path="/category/:category" element={<CategoryPage />}
+        />
+>>>>>>> Stashed changes
       </Routes>
     </div>
   );

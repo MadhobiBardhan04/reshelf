@@ -8,12 +8,20 @@ import { FaGlobe } from "react-icons/fa";
 import { FaTag } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-
-import ProductDetails from "./pages/ProductDetails.jsx";
 import { getProducts } from "./data/products.js";
 
 function HomePage() {
   const products = getProducts();
+   const categories = [
+  { icon: "📚", name: "Books & Textbooks", path: "books" },
+  { icon: "💻", name: "Laptops & Computers", path: "laptops" },
+  { icon: "📱", name: "Phones & Tablets", path: "phones" },
+  { icon: "🧮", name: "Calculators", path: "calculators" },
+  { icon: "✏️", name: "Stationery", path: "stationery" },
+  { icon: "🔧", name: "Lab & Engineering Tools", path: "lab-tools" },
+  { icon: "🪑", name: "Furniture", path: "furniture" },
+  { icon: "🎧", name: "Gadgets & Accessories", path: "gadgets" },
+];
   return (
     <div className="homepage">
       <div className="header">
@@ -32,7 +40,25 @@ function HomePage() {
           </button>
         </div>
       </div>
-
+      <div className="browse_categories">
+              <h2>Browse Categories</h2>
+              <div className="categories_grid">
+                {categories.map((category) => (
+                   <Link
+                    to={`/category/${category.path}`}
+                      className="category_card"
+                        key={category.path}
+                         >
+                   <div className="category_icon">
+                      {category.icon}
+                   </div>
+      
+                    <h3>{category.name}</h3>
+                 </Link>
+                 ))}    
+              </div>
+            </div>
+         
       <div className="featured_products">
         <h2>Featured Products</h2>
         <div className="product_grid">
