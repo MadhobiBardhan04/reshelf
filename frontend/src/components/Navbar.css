@@ -112,3 +112,44 @@
   align-items: center;
   justify-content: center;
 }
+
+.profile_container {
+  position: relative;
+}
+
+.profile_dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 180px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  z-index: 200;
+}
+
+.profile_dropdown h3 {
+  margin: 0 0 12px 0;
+  color: var(--color-navy);
+  font-family: "Outfit", sans-serif;
+}
+
+.profile_dropdown p {
+  margin: 10px 0;
+  font-family: "Outfit", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+}
+
+.profile_dropdown p:hover {
+  color: var(--color-deep);
+}
+
+.profile_dropdown hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 12px 0;
+}
