@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
-
+import Sell from "../pages/sell";
 import "./Navbar.css";
 
 export default function Navbar() {

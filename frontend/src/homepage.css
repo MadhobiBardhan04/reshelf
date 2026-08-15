@@ -71,9 +71,18 @@
 }
 
 .product_card {
-  border: 1px solid gray;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border: 1px solid gainsboro;
   border-radius: 12px;
   overflow: hidden;
+  transition: transform 0.15s ease;
+}
+.product_card_link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 .product_card:hover {
   box-shadow: 0 6px 16px rgba(0, 95, 143, 0.15);

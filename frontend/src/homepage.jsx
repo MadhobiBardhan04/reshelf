@@ -1,4 +1,5 @@
 import "./homepage.css";
+import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
@@ -7,7 +8,10 @@ import { FaGlobe } from "react-icons/fa";
 import { FaTag } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { getProducts } from "./data/products.jsx";
+
+import ProductDetails from "./pages/ProductDetails.jsx";
+import { getProducts } from "./data/products.js";
+
 function HomePage() {
   const products = getProducts();
   return (
@@ -28,15 +32,20 @@ function HomePage() {
           </button>
         </div>
       </div>
+
       <div className="featured_products">
         <h2>Featured Products</h2>
         <div className="product_grid">
           {products.slice(0, 8).map((product) => (
-            <div className="product_card" key={product.id}>
-              <img src={product.image} alt={product.name} />
+            <Link
+              to={`/products/${product.id}`}
+              className="product_card"
+              key={product.id}
+            >
+              <img src={product.images[0]} alt={product.name} />
               <h4>{product.name}</h4>
               <p>BDT {product.price}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

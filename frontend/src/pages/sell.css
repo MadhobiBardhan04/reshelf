@@ -1,0 +1,185 @@
+.sell_page {
+  display: flex;
+  gap: 48px;
+  padding: 48px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sell_form {
+  font-family: "Outfit", sans-serif;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sell_form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.sell_form input,
+.sell_form select,
+.sell_form textarea {
+  border: 1px solid gainsboro;
+  border-radius: 8px;
+  padding: 9.6px 12.8px;
+  font-weight: 400;
+  font-family: "Inter", sans-serif;
+}
+.sell_form textarea {
+  resize: none;
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.sell_row {
+  display: flex;
+  gap: 1rem;
+}
+.sell_row label {
+  flex: 1;
+}
+
+.char_count {
+  align-self: flex-end;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-mid);
+}
+.required {
+  color: #c0392b;
+}
+
+.sell_image {
+  font-family: "Outfit", sans-serif;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.image_label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-navy);
+}
+
+.image_grid_box {
+  border: 1px dashed gray;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  min-height: 300px;
+}
+
+.image_grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.image_thumb {
+  position: relative;
+  aspect-ratio: 1/1;
+}
+.image_thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove_image_btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: gray;
+  color: white;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add_more_tile {
+  aspect-ratio: 1/1;
+  border: 2px dashed gainsboro;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--color-mid);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.add_more_tile:hover {
+  border-color: var(--color-deep);
+  background: #f4fbff;
+}
+.add_more_icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.image_count {
+  align-self: flex-end;
+
+  padding-top: 5px;
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--color-mid);
+}
+
+@media (max-width: 600px) {
+  .image_grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.6rem;
+  }
+}
+
+.upload_btn {
+  align-self: flex-end;
+  margin-top: 1rem;
+  background: var(--color-deep);
+  color: white;
+  border: none;
+  padding: 0.7rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .sell_page {
+    flex-direction: column;
+    padding: 2rem 1.25rem;
+    gap: 2rem;
+  }
+  .sell_row {
+    flex-direction: column;
+  }
+  .image_dropzone {
+    min-height: 220px;
+  }
+  .upload_btn {
+    align-self: stretch;
+    text-align: center;
+  }
+}
