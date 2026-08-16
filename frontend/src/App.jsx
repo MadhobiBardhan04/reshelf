@@ -8,6 +8,7 @@ import Sell from "./pages/sell.jsx";
 import ProductDetails from "./pages/ProductDetails";
 import CategoryPage from "./CategoryPage";
 import AllListings from "./pages/AllListings";
+import StudentDiscount from "./pages/StudentDiscount.jsx";
 function App() {
   return (
     <div className="app">
@@ -20,6 +21,7 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/listings" element={<AllListings />} />
+        <Route path="/student-discounts" element={<StudentDiscount />} />
       </Routes>
     </div>
   );
