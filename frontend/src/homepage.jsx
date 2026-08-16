@@ -131,8 +131,12 @@ function HomePage() {
           <Link to="/student-discounts">
             <h4>Student Discounts</h4>
           </Link>
-          <h4>Buying Guide</h4>
-          <h4>Selling Guide</h4>
+          <Link to="/buying-guide">
+            <h4>Buying Guide</h4>
+          </Link>
+          <Link to="/selling-guide">
+            <h4>Selling Guide</h4>
+          </Link>
         </div>
         <div className="fifth_column">
           <h3> Account </h3>
@@ -142,9 +146,13 @@ function HomePage() {
           <Link to="/auth">
             <h4>Sign Up</h4>
           </Link>
-          <h4>My Profile</h4>
+          <Link to="/profile">
+            <h4>My Profile</h4>
+          </Link>
+          <Link to="/Favorites">
+            <h4> Favorites </h4>
+          </Link>
           <h4>My Listings</h4>
-          <h4>My Favorites</h4>
         </div>
         <div className="sixth_column">
           <h3> Trust & Support </h3>

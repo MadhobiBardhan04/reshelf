@@ -12,6 +12,9 @@ import StudentDiscount from "./pages/StudentDiscount.jsx";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Favorites from "./pages/Favorites.jsx";
+import BuyingGuide from "./pages/BuyingGuide.jsx";
+import SellingGuide from "./pages/SellingGuide.jsx";
+
 function App() {
   return (
     <div className="app">
@@ -28,6 +31,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/buying-guide" element={<BuyingGuide />} />
+        <Route path="/selling-guide" element={<SellingGuide />} />
       </Routes>
     </div>
   );

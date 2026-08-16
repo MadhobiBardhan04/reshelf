@@ -1,0 +1,47 @@
+.guide-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #f8f9fb;
+}
+
+.guide-box {
+  width: 700px;
+  margin-top: 70px;
+  padding: 50px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+
+.guide-box h1 {
+  font-family: "Mozilla Text", serif;
+  color: #083f75;
+  font-size: 35px;
+}
+
+.guide-box p {
+  margin-top: 20px;
+  font-family: "Mozilla Text", serif;
+  color: #15172b;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.guide-box span {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 8px 15px;
+  background-color: #f8f9fb;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  color: #083f75;
+  font-family: "Mozilla Text", serif;
+  font-size: 12px;
+  font-weight: bold;
+}
