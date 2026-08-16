@@ -6,9 +6,12 @@ import Cart from "./pages/cart.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Sell from "./pages/sell.jsx";
 import ProductDetails from "./pages/ProductDetails";
-import CategoryPage from "./CategoryPage";
+import CategoryPage from "./pages/Categorypage.jsx";
 import AllListings from "./pages/AllListings";
 import StudentDiscount from "./pages/StudentDiscount.jsx";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Favorites from "./pages/Favorites.jsx";
 function App() {
   return (
     <div className="app">
@@ -22,6 +25,9 @@ function App() {
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/listings" element={<AllListings />} />
         <Route path="/student-discounts" element={<StudentDiscount />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </div>
   );

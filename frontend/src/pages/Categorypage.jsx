@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getProducts } from "./data/products.js";
+import { getProducts } from "../data/products.js";
 import "./categorypage.css";
 
-function CategoryPage() {
+export default function CategoryPage() {
   const { category } = useParams();
+  const products = getProducts();
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
   const categoryData = {
@@ -84,10 +87,7 @@ function CategoryPage() {
       name: "Furniture",
       productCategory: "Furniture",
       description: "Furniture",
-      subcategories: [
-        "Study Tables",
-        "Organizer",
-      ],
+      subcategories: ["Study Tables", "Organizer"],
     },
 
     gadgets: {
@@ -105,10 +105,7 @@ function CategoryPage() {
 
   const currentCategory = categoryData[category];
 
-  const categoryName =
-    currentCategory?.name || "Category Not Found";
-
-  const products = getProducts();
+  const categoryName = currentCategory?.name || "Category Not Found";
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
@@ -125,9 +122,7 @@ function CategoryPage() {
     <div className="category_page">
       <h1>{categoryName}</h1>
 
-      <p>
-        Browse available {categoryName.toLowerCase()} on Reshelf.
-      </p>
+      <p>Browse available {categoryName.toLowerCase()} on Reshelf.</p>
 
       <div className="related_categories">
         <p>Related categories</p>
@@ -148,9 +143,7 @@ function CategoryPage() {
                 selectedSubcategory === subcategory ? "active" : ""
               }`}
               key={subcategory}
-              onClick={() =>
-                setSelectedSubcategory(subcategory)
-              }
+              onClick={() => setSelectedSubcategory(subcategory)}
             >
               {subcategory}
             </button>
@@ -161,18 +154,15 @@ function CategoryPage() {
       <div className="product_grid">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <div className="product_card" key={product.id}>
-              <img
-                src={product.images[0]}
-                alt={product.name}
-              />
-
-              <h3>{product.name}</h3>
-
+            <Link
+              to={`/products/${product.id}`}
+              className="product_card"
+              key={product.id}
+            >
+              <img src={product.images[0]} alt={product.name} />
+              <h4>{product.name}</h4>
               <p>BDT {product.price}</p>
-
-              <p>{product.condition}</p>
-            </div>
+            </Link>
           ))
         ) : (
           <p>No products available in this category.</p>
@@ -181,5 +171,3 @@ function CategoryPage() {
     </div>
   );
 }
-
-export default CategoryPage;

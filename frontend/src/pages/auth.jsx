@@ -75,7 +75,7 @@ export default function Auth() {
                 className="eye_icon"
                 onClick={() => setShowPassword(!showPassword)}
               />
-              <h6> Frogot password? </h6>
+              <h6> Forgot password? </h6>
             </div>
             <div className="btn2">
               <button
@@ -147,7 +147,7 @@ export default function Auth() {
             </>
           ) : (
             <>
-              <h6>Dont have an account?</h6>
+              <h6>Don't have an account?</h6>
               <span onClick={() => setIsSignUp(true)}>Sign Up</span>
             </>
           )}
