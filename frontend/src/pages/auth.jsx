@@ -1,154 +1,331 @@
 import "./auth.css";
-import { FaEnvelope } from "react-icons/fa";
-import { FaLock } from "react-icons/fa";
-import { FaEye } from "react-icons/fa";
-import { FaApple } from "react-icons/fa";
-import { FaPhone } from "react-icons/fa";
+
+import { FaEnvelope, FaLock, FaEye, FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+import { auth } from "../../firebase.js";
+
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [loginMethod, setLoginMethod] = useState("email");
-  const [sentOtp, setSentOtp] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
+
+  const [username, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  let heading;
-  let subtitle;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
-  if (isSignUp) {
-    heading = "Create an Account";
-    subtitle = "Create your ReShelf.bd account";
-  } else {
-    heading = "Welcome Back";
-    subtitle = "Sign in to your Reself.bd account";
-  }
+  const handleEmailSignup = async () => {
+    if (!email || !password) {
+      setError("Please enter your email and password.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          username,
+          displayName,
+          email,
+          password,
+        }),
+      });
+
+      const text = await response.text();
+
+      let data = {};
+
+      if (text) {
+        data = JSON.parse(text);
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || "Signup failed.");
+      }
+
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate("/");
+      window.location.reload();
+    } catch (error) {
+      console.error("Signup error:", error);
+      setError(error.message || "Signup failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEmailLogin = async () => {
+    if (!email || !password) {
+      setError("Please enter your email and password.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const text = await response.text();
+
+      let data = {};
+
+      if (text) {
+        data = JSON.parse(text);
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed.");
+      }
+
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate("/");
+      window.location.reload();
+    } catch (error) {
+      console.error("Login error:", error);
+      setError(error.message || "Login failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const provider = new GoogleAuthProvider();
+
+      const result = await signInWithPopup(auth, provider);
+
+      const idToken = await result.user.getIdToken();
+
+      const response = await fetch(`${API_URL}/api/auth/firebase`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          idToken,
+        }),
+      });
+
+      const text = await response.text();
+
+      let data = {};
+
+      if (text) {
+        data = JSON.parse(text);
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || "Google login failed.");
+      }
+
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate("/");
+      window.location.reload();
+    } catch (error) {
+      console.error("Google login error:", error);
+      setError(error.message || "Google login failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const switchToSignUp = () => {
+    setIsSignUp(true);
+    setError("");
+    setPassword("");
+  };
+
+  const switchToSignIn = () => {
+    setIsSignUp(false);
+    setError("");
+    setPassword("");
+  };
+
   return (
     <div className="auth">
       <div className="Upper_heading">
-        <h2> {heading} </h2>
+        <h2>{isSignUp ? "Create an Account" : "Welcome Back"}</h2>
+
         <h5 className={isSignUp ? "signup-subtitle" : "signin-subtitle"}>
-          {subtitle}
+          {isSignUp
+            ? "Create your ReShelf.bd account"
+            : "Sign in to your ReShelf.bd account"}
         </h5>
       </div>
+
       <div className="Big_box">
-        <div className="btn">
-          <button
-            onClick={() => {
-              setLoginMethod("email");
-              setSentOtp(false);
-            }}
-          >
-            Email
-          </button>
-          <button
-            onClick={() => {
-              setLoginMethod("phone");
-              setSentOtp(false);
-            }}
-          >
-            Phone
-          </button>
-        </div>
-        {loginMethod === "email" ? (
+        {isSignUp && (
           <>
             <div className="heading1">
-              <h5> Email </h5>
+              <h5>Username</h5>
             </div>
-            <div className="Type_email_address">
-              <FaEnvelope className="Mail_icon" />
-              <input type="text" placeholder="you@example.com" />
+
+            <div className="input-wrapper">
+              <FaEnvelope className="input-icon" />
+
+              <input
+                type="text"
+                placeholder="Enter username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
 
             <div className="heading2">
-              <h5> password </h5>
+              <h5>Display Name</h5>
             </div>
-            <div className="Type_password">
-              <FaLock className="lock_icon" />
+
+            <div className="input-wrapper">
+              <FaEnvelope className="input-icon" />
+
               <input
-                type={showPassword ? "text" : "password"}
-                placeholder="robin122#@cat"
-              />
-              <FaEye
-                className="eye_icon"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-              <h6> Forgot password? </h6>
-            </div>
-            <div className="btn2">
-              <button
-                onClick={() => {
-                  localStorage.setItem("isLoggedIn", "true");
-                  navigate("/");
-                  window.location.reload();
-                }}
-              >
-                Sign In
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="heading1">
-              <h5> Phone Number </h5>
-            </div>
-            <div className="Type_email_address">
-              <FaPhone className="Mail_icon" />
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="+880 1XXXXXXXXX"
+                type="text"
+                placeholder="Enter display name"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
               />
             </div>
-            <div className="heading2">
-              <h5> OTP </h5>
-            </div>
-            <div className="Type_password">
-              <FaLock className="lock_icon" />
-              <input type="text" placeholder="123456" />
-              <FaEye className="eye_icon" />
-              <h6> Resend OTP </h6>
-            </div>
-            {sentOtp ? (
-              <div className="btn2">
-                <button
-                  onClick={() => {
-                    localStorage.setItem("isLoggedIn", "true");
-                    navigate("/");
-                    window.location.reload();
-                  }}
-                >
-                  Sign In
-                </button>
-              </div>
-            ) : (
-              <div className="btn2">
-                <button onClick={() => setSentOtp(true)}>Send OTP</button>
-              </div>
-            )}
           </>
         )}
 
+        <div className={isSignUp ? "heading2" : "heading1"}>
+          <h5>Email</h5>
+        </div>
+
+        <div className="input-wrapper">
+          <FaEnvelope className="input-icon" />
+
+          <input
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="heading2">
+          <h5>Password</h5>
+        </div>
+
+        <div className="input-wrapper">
+          <FaLock className="input-icon" />
+
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <FaEye
+            className="password-eye"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </div>
+
+        {!isSignUp && <div className="forgot-password">Forgot password?</div>}
+
+        {error && <p className="auth-error">{error}</p>}
+
+        <div className="btn2">
+          <button
+            onClick={isSignUp ? handleEmailSignup : handleEmailLogin}
+            disabled={loading}
+          >
+            {loading
+              ? isSignUp
+                ? "Creating Account..."
+                : "Signing In..."
+              : isSignUp
+                ? "Create Account"
+                : "Sign In"}
+          </button>
+        </div>
+
         <div className="heading3">
-          <h6> ──────────────── or continue with ──────────────── </h6>
+          <h6>────────────── or continue with ──────────────</h6>
         </div>
+
         <div className="btn3">
-          <FcGoogle className="google_icon" />
-          <button>Sign In with Google</button>
-          <FaApple className="apple_icon" />
-          <button>Sign In with Apple</button>
+          <button onClick={handleGoogleLogin}>
+            <FcGoogle className="social-icon" />
+
+            <span>
+              {isSignUp ? "Sign Up with Google" : "Sign In with Google"}
+            </span>
+          </button>
+
+          <button>
+            <FaApple className="social-icon apple-icon" />
+
+            <span>
+              {isSignUp ? "Sign Up with Apple" : "Sign In with Apple"}
+            </span>
+          </button>
         </div>
+
         <div className="heading4">
           {isSignUp ? (
             <>
-              <h6>Already have an account? </h6>
-              <span onClick={() => setIsSignUp(false)}>Sign In</span>
+              <span className="switch-text">Already have an account?</span>
+
+              <span className="switch-link" onClick={switchToSignIn}>
+                Sign In
+              </span>
             </>
           ) : (
             <>
-              <h6>Don't have an account?</h6>
-              <span onClick={() => setIsSignUp(true)}>Sign Up</span>
+              <span className="switch-text">Don't have an account?</span>
+
+              <span className="switch-link" onClick={switchToSignUp}>
+                Sign Up
+              </span>
             </>
           )}
         </div>

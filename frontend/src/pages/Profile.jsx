@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   FaUser,
   FaEnvelope,
@@ -14,11 +15,21 @@ import "./Profile.css";
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
 
+  const storedUser = localStorage.getItem("user");
+
+  let user = null;
+
+  try {
+    user = storedUser ? JSON.parse(storedUser) : null;
+  } catch (error) {
+    user = null;
+  }
+
   const [profile, setProfile] = useState({
-    name: "Your Name",
-    email: "student@email.com",
-    phone: "+880 1XXXXXXXXX",
-    university: "Your University",
+    name: user?.displayName || user?.username || "Your Name",
+    email: user?.email || "student@email.com",
+    phone: user?.phone || "+880 1XXXXXXXXX",
+    university: user?.university || "Your University",
   });
 
   const handleChange = (e) => {
@@ -28,33 +39,48 @@ export default function Profile() {
     });
   };
 
+  const handleSave = () => {
+    const updatedUser = {
+      ...user,
+      displayName: profile.name,
+      username: profile.name,
+      email: profile.email,
+      phone: profile.phone,
+      university: profile.university,
+    };
+
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+
+    setIsEditing(false);
+  };
+
   return (
     <div className="profile_page">
-
       <div className="profile_page_header">
         <div>
           <h1>My Profile</h1>
-          <p>
-            Manage your account information
-          </p>
+
+          <p>Manage your account information</p>
         </div>
+
         <button
           className="edit_profile_btn"
           onClick={() => setIsEditing(!isEditing)}
         >
           <FaEdit />
+
           {isEditing ? "Cancel" : "Edit Profile"}
         </button>
-
       </div>
 
       <div className="profile_main_card">
-
         <div className="profile_avatar_large">
           <FaUser />
         </div>
+
         <div className="profile_main_info">
           <h2>{profile.name}</h2>
+
           <p>
             <FaEnvelope />
             {profile.email}
@@ -62,17 +88,18 @@ export default function Profile() {
         </div>
       </div>
 
-
       <div className="profile_section">
-
         <h2>Account Information</h2>
+
         <div className="profile_information_card">
           <div className="profile_field">
             <div className="profile_field_icon">
               <FaUser />
             </div>
+
             <div className="profile_field_content">
               <label>Full Name</label>
+
               {isEditing ? (
                 <input
                   type="text"
@@ -83,38 +110,27 @@ export default function Profile() {
               ) : (
                 <p>{profile.name}</p>
               )}
-
             </div>
-
           </div>
-          <div className="profile_field">
 
+          <div className="profile_field">
             <div className="profile_field_icon">
               <FaEnvelope />
             </div>
+
             <div className="profile_field_content">
               <label>Email</label>
-              {isEditing ? (
-                <input
-                  type="email"
-                  name="email"
-                  value={profile.email}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p>{profile.email}</p>
-              )}
+
+              <p>{profile.email}</p>
             </div>
           </div>
 
           <div className="profile_field">
-
             <div className="profile_field_icon">
               <FaPhone />
             </div>
 
             <div className="profile_field_content">
-
               <label>Phone</label>
 
               {isEditing ? (
@@ -127,17 +143,17 @@ export default function Profile() {
               ) : (
                 <p>{profile.phone}</p>
               )}
-
             </div>
-
           </div>
 
           <div className="profile_field">
             <div className="profile_field_icon">
               <FaUniversity />
             </div>
+
             <div className="profile_field_content">
               <label>University</label>
+
               {isEditing ? (
                 <input
                   type="text"
@@ -155,20 +171,24 @@ export default function Profile() {
 
       <div className="profile_section">
         <h2>My Activity</h2>
+
         <div className="profile_activity_grid">
           <div className="activity_card">
             <div className="activity_icon">
               <FaBoxOpen />
             </div>
+
             <div>
               <h3>4</h3>
               <p>My Listings</p>
             </div>
           </div>
+
           <div className="activity_card">
             <div className="activity_icon">
               <FaHeart />
             </div>
+
             <div>
               <h3>7</h3>
               <p>Favorites</p>
@@ -178,12 +198,8 @@ export default function Profile() {
       </div>
 
       {isEditing && (
-
         <div className="profile_save_container">
-          <button
-            className="save_profile_btn"
-            onClick={() => setIsEditing(false)}
-          >
+          <button className="save_profile_btn" onClick={handleSave}>
             Save Changes
           </button>
         </div>
