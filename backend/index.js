@@ -1,3 +1,4 @@
+import dns from "dns";
 import express from "express";
 import userRoutes from "./routes/users.js";
 import authRouter from "./routes/auth.js";
@@ -6,6 +7,8 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import "dotenv/config";
 import cors from "cors";
+
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -24,12 +27,14 @@ connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(
   cors({
+    origin: "http://localhost:5175",
     credentials: true,
-    origin: process.env.ALLOWED_ORIGIN,
   }),
 );
+
 app.use(log);
 
 app.get("/api", (req, res) => res.json({ message: "API is working" }));
