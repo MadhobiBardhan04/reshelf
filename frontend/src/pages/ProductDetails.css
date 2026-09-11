@@ -106,23 +106,20 @@
 .pd_info h1 {
   font-size: 2.1rem;
   margin: 0.75rem 0 0.5rem;
-}
-.pd_price {
-  font-size: 1.9rem;
-  margin-bottom: 2rem;
-}
-.pd_info h1 {
   font-family: "Outfit", sans-serif;
   font-size: xx-large;
 
   margin: 0 0 0.5rem;
 }
 .pd_price {
+  font-size: 1.9rem;
+  margin-bottom: 2rem;
   font-family: "Outfit", sans-serif;
 
   font-weight: 650;
   color: var(--color-deep);
 }
+
 .pd_attrs > div {
   display: flex;
   flex-direction: column;
@@ -140,6 +137,10 @@
   font-size: 0.8rem;
   letter-spacing: 0.04em;
   padding-top: 5px;
+  font-size: 0.75rem;
+  color: var(--color-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 .pd_attr_value {
   margin-top: 0.3rem;
@@ -149,7 +150,11 @@
   color: var(--color-navy);
   padding: 10px 14px;
   border-radius: 12px;
-  width: 300px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .pd_tabs_section {
@@ -170,27 +175,6 @@
 }
 .pd_seller_name {
   font-size: 1.05rem;
-}
-
-@media (max-width: 800px) {
-  .pd_gallery {
-    position: static;
-  }
-  .pd_top {
-    flex-direction: column;
-    gap: 2rem;
-  }
-}
-
-.pd_attr_label {
-  font-size: 0.75rem;
-  color: var(--color-mid);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-.pd_attr_value {
-  font-weight: 600;
-  text-transform: capitalize;
 }
 
 .pd_add_btn {
@@ -275,18 +259,90 @@
 }
 
 @media (max-width: 800px) {
-  .pd_top {
-    flex-direction: column;
-  }
   .product_details {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
   }
+
+  .pd_gallery {
+    width: 100%;
+    flex: none;
+    position: static;
+    min-width: 0;
+  }
+
+  .pd_main_image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+  }
+
+  .pd_main_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .pd_info {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .pd_info h1 {
+    font-size: 2rem;
+  }
+
+  .pd_price {
+    font-size: 1.7rem;
+  }
+
   .pd_attrs {
-    gap: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem 0;
   }
+
+  .pd_attr_value {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pd_add_btn {
+    padding: 0.8rem 1.5rem;
+  }
+
+  .pd_tabs_section {
+    margin-top: 2rem;
+  }
+
+  .pd_tabs {
+    gap: 1rem;
+  }
+
+  .pd_tab {
+    font-size: 0.9rem;
+  }
+
+  .pd_tab_content {
+    font-size: 0.95rem;
+  }
+
   .pd_seller {
+    width: 100%;
+    box-sizing: border-box;
     flex-wrap: wrap;
+    margin-top: 1.5rem;
+    padding: 1rem;
   }
+
   .pd_seller_link {
     margin-left: 0;
   }

@@ -5,23 +5,32 @@
   justify-content: center;
   align-items: flex-start;
   background-color: #f8f9fb;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .guide-box {
   margin-top: 100px;
-  width: 700px;
+  width: 100%;
+  max-width: 900px;
   padding: 50px;
   border: 1px solid #e5e7eb;
   background: white;
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  text-align: center;
+  text-align: left;
+  box-sizing: border-box;
 }
 
 .guide-box h1 {
   font-family: "Mozilla Text", serif;
   color: #083f75;
   font-size: 35px;
+  text-align: center;
+}
+
+.guide-box > p:first-of-type {
+  text-align: center;
 }
 
 .guide-box p {
@@ -31,6 +40,23 @@
   font-size: 15px;
   line-height: 1.6;
   opacity: 0.75;
+}
+
+.guide-box ol {
+  margin-top: 25px;
+  padding-left: 1.25rem;
+}
+
+.guide-box ol li {
+  font-family: "Mozilla Text", serif;
+  color: #15172b;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.guide-box ol li strong {
+  color: #083f75;
 }
 
 .guide-box span {
@@ -44,4 +70,25 @@
   font-family: "Mozilla Text", serif;
   font-size: 12px;
   font-weight: bold;
+}
+
+@media (max-width: 750px) {
+  .guide-box {
+    margin-top: 50px;
+    padding: 30px 25px;
+  }
+  .guide-box h1 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 500px) {
+  .guide-box {
+    margin-top: 30px;
+    padding: 25px 18px;
+    border-radius: 10px;
+  }
+  .guide-box h1 {
+    font-size: 24px;
+  }
 }

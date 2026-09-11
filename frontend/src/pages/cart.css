@@ -1,13 +1,49 @@
-.cart {
+.cart_list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 4rem 1rem;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 2rem auto 0;
 }
 
-.cart h1 {
-  font-family: "Outfit", serif;
-  text-align: center;
-  font-size: 200;
+.cart_item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--color-lightest);
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.cart_item img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart_item_info {
+  flex: 1;
+}
+.cart_item_info h4 {
+  margin: 0 0 0.25rem;
+}
+.cart_item_info p {
+  margin: 0;
+  color: var(--color-mid);
+  font-weight: 600;
+}
+
+.cart_remove_btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-lightest);
+  color: var(--color-navy);
+  font-size: 15px;
+  cursor: pointer;
+}
+.cart_remove_btn:hover {
+  background: #e0e0e0;
 }

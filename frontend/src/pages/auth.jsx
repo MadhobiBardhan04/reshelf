@@ -32,7 +32,11 @@ export default function Auth() {
       setError("Please enter your email and password.");
       return;
     }
-
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address (e.g. name@example.com).");
+      return;
+    }
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       return;
@@ -118,7 +122,6 @@ export default function Auth() {
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/");
       window.location.reload();
     } catch (error) {
       console.error("Login error:", error);
@@ -199,135 +202,137 @@ export default function Auth() {
         </h5>
       </div>
 
-      <div className="Big_box">
-        {isSignUp && (
-          <>
-            <div className="heading1">
-              <h5>Username</h5>
-            </div>
-
-            <div className="input-wrapper">
-              <FaEnvelope className="input-icon" />
-
-              <input
-                type="text"
-                placeholder="Enter username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-
-            <div className="heading2">
-              <h5>Display Name</h5>
-            </div>
-
-            <div className="input-wrapper">
-              <FaEnvelope className="input-icon" />
-
-              <input
-                type="text"
-                placeholder="Enter display name"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-              />
-            </div>
-          </>
-        )}
-
-        <div className={isSignUp ? "heading2" : "heading1"}>
-          <h5>Email</h5>
-        </div>
-
-        <div className="input-wrapper">
-          <FaEnvelope className="input-icon" />
-
-          <input
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        <div className="heading2">
-          <h5>Password</h5>
-        </div>
-
-        <div className="input-wrapper">
-          <FaLock className="input-icon" />
-
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <FaEye
-            className="password-eye"
-            onClick={() => setShowPassword(!showPassword)}
-          />
-        </div>
-
-        {!isSignUp && <div className="forgot-password">Forgot password?</div>}
-
-        {error && <p className="auth-error">{error}</p>}
-
-        <div className="btn2">
-          <button
-            onClick={isSignUp ? handleEmailSignup : handleEmailLogin}
-            disabled={loading}
-          >
-            {loading
-              ? isSignUp
-                ? "Creating Account..."
-                : "Signing In..."
-              : isSignUp
-                ? "Create Account"
-                : "Sign In"}
-          </button>
-        </div>
-
-        <div className="heading3">
-          <h6>────────────── or continue with ──────────────</h6>
-        </div>
-
-        <div className="btn3">
-          <button onClick={handleGoogleLogin}>
-            <FcGoogle className="social-icon" />
-
-            <span>
-              {isSignUp ? "Sign Up with Google" : "Sign In with Google"}
-            </span>
-          </button>
-
-          <button>
-            <FaApple className="social-icon apple-icon" />
-
-            <span>
-              {isSignUp ? "Sign Up with Apple" : "Sign In with Apple"}
-            </span>
-          </button>
-        </div>
-
-        <div className="heading4">
-          {isSignUp ? (
+      <div className="auth_page">
+        <div className="Big_box">
+          {isSignUp && (
             <>
-              <span className="switch-text">Already have an account?</span>
+              <div className="heading1">
+                <h5>Username</h5>
+              </div>
 
-              <span className="switch-link" onClick={switchToSignIn}>
-                Sign In
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="switch-text">Don't have an account?</span>
+              <div className="input-wrapper">
+                <FaEnvelope className="input-icon" />
 
-              <span className="switch-link" onClick={switchToSignUp}>
-                Sign Up
-              </span>
+                <input
+                  type="text"
+                  placeholder="Enter username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+
+              <div className="heading2">
+                <h5>Display Name</h5>
+              </div>
+
+              <div className="input-wrapper">
+                <FaEnvelope className="input-icon" />
+
+                <input
+                  type="text"
+                  placeholder="Enter display name"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                />
+              </div>
             </>
           )}
+
+          <div className={isSignUp ? "heading2" : "heading1"}>
+            <h5>Email</h5>
+          </div>
+
+          <div className="input-wrapper">
+            <FaEnvelope className="input-icon" />
+
+            <input
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="heading2">
+            <h5>Password</h5>
+          </div>
+
+          <div className="input-wrapper">
+            <FaLock className="input-icon" />
+
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <FaEye
+              className="password-eye"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          </div>
+
+          {!isSignUp && <div className="forgot-password">Forgot password?</div>}
+
+          {error && <p className="auth-error">{error}</p>}
+
+          <div className="btn2">
+            <button
+              onClick={isSignUp ? handleEmailSignup : handleEmailLogin}
+              disabled={loading}
+            >
+              {loading
+                ? isSignUp
+                  ? "Creating Account..."
+                  : "Signing In..."
+                : isSignUp
+                  ? "Create Account"
+                  : "Sign In"}
+            </button>
+          </div>
+
+          <div className="heading3">
+            <h6>────────────── or continue with ──────────────</h6>
+          </div>
+
+          <div className="btn3">
+            <button onClick={handleGoogleLogin}>
+              <FcGoogle className="social-icon" />
+
+              <span>
+                {isSignUp ? "Sign Up with Google" : "Sign In with Google"}
+              </span>
+            </button>
+
+            <button>
+              <FaApple className="social-icon apple-icon" />
+
+              <span>
+                {isSignUp ? "Sign Up with Apple" : "Sign In with Apple"}
+              </span>
+            </button>
+          </div>
+
+          <div className="heading4">
+            {isSignUp ? (
+              <>
+                <span className="switch-text">Already have an account?</span>
+
+                <span className="switch-link" onClick={switchToSignIn}>
+                  Sign In
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="switch-text">Don't have an account?</span>
+
+                <span className="switch-link" onClick={switchToSignUp}>
+                  Sign Up
+                </span>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

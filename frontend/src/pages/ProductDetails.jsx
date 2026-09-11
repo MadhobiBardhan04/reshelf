@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FaStore, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { getProductById } from "../data/products";
+import { useCart } from "./cartContext";
 import "./ProductDetails.css";
 
 const TABS = ["Description", "Specifications"];
@@ -20,7 +21,7 @@ export default function ProductDetails() {
   const nextImage = () => setActiveImage((i) => (i + 1) % images.length);
   const prevImage = () =>
     setActiveImage((i) => (i - 1 + images.length) % images.length);
-
+  const { addToCart } = useCart();
   return (
     <div className="product_details">
       <div className="pd_gallery">
@@ -71,7 +72,9 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        <button className="pd_add_btn">Add to cart</button>
+        <button className="pd_add_btn" onClick={() => addToCart(product)}>
+          Add to cart
+        </button>
         <div className="pd_tabs_section">
           <div className="pd_tabs">
             {TABS.map((tab) => (
