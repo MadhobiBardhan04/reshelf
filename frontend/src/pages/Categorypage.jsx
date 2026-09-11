@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { getProducts } from "../data/products.js";
+import { Link, useParams } from "react-router-dom";
 import "./categorypage.css";
 
 export default function CategoryPage() {
   const { category } = useParams();
-  const products = getProducts();
+
+  const [products, setProducts] = useState([]);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/products")
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  }, []);
 
   const categoryData = {
     books: {
@@ -122,7 +132,9 @@ export default function CategoryPage() {
     <div className="category_page">
       <h1>{categoryName}</h1>
 
-      <p>Browse available {categoryName.toLowerCase()} on Reshelf.</p>
+      <p>
+        Browse available {categoryName.toLowerCase()} on Reshelf.
+      </p>
 
       <div className="related_categories">
         <p>Related categories</p>
@@ -155,12 +167,17 @@ export default function CategoryPage() {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <Link
-              to={`/products/${product.id}`}
+              to={`/products/${product._id}`}
               className="product_card"
-              key={product.id}
+              key={product._id}
             >
-              <img src={product.images[0]} alt={product.name} />
+              <img
+                src={product.images[0].url}
+                alt={product.name}
+              />
+
               <h4>{product.name}</h4>
+
               <p>BDT {product.price}</p>
             </Link>
           ))
@@ -171,3 +188,4 @@ export default function CategoryPage() {
     </div>
   );
 }
+

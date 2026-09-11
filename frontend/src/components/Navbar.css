@@ -7,7 +7,7 @@
 
 .logo-link {
   font-family: "Outfit", sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 700;
   color: var(--color-deep);
   text-decoration: none;
@@ -22,16 +22,16 @@
 .navbar {
   --font-display: "Outfit", serif;
   --font-body: "Inter", sans-serif;
-
   position: sticky;
   top: 0;
-  height: 80px;
   z-index: 100;
+  height: 80px;
+  box-sizing: border-box;
   background: white;
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding: 0.75rem 2rem;
+  padding: 0 2rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
@@ -42,10 +42,12 @@
   border-radius: 999px;
   padding: 0.4rem 1rem;
   flex: 1;
-  max-width: 900px;
+  max-width: 1100px;
   min-width: 0;
+  box-sizing: border-box;
   transition: max-width 0.2s ease;
 }
+
 .SearchBar_header1 input {
   border: none;
   outline: none;

@@ -8,10 +8,21 @@ import { FaGlobe } from "react-icons/fa";
 import { FaTag } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { getProducts } from "./data/products.js";
+import { useEffect, useState } from "react";
 
 function HomePage() {
-  const products = getProducts();
+  const [products, setProducts] = useState([]);
+
+useEffect(() => {
+  fetch("http://localhost:4000/api/products")
+    .then((response) => response.json())
+    .then((data) => {
+      setProducts(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching products:", error);
+    });
+}, []);
   const categories = [
     { icon: "📚", name: "Books & Textbooks", path: "books" },
     { icon: "💻", name: "Laptops & Computers", path: "laptops" },
@@ -25,19 +36,16 @@ function HomePage() {
   return (
     <div className="homepage">
       <div className="header">
-        <h1 font-size="large" color="white">
-          Buy & Sell Student Essentials
-        </h1>
-        <h2 font-size="large" color="black">
-          Trusted student marketplace — books, gadgets, stationery, study
-          essentials & more
+        <h1>Buy & Sell Student Essentials</h1>
+
+        <h2>
+            Trusted student marketplace — books, gadgets, stationery, study
+            essentials & more
         </h2>
         <div className="SearchBar_header">
           <FaSearch className="Search_icon" />
           <input type="text" placeholder="What are you looking for?" />
-          <button className="Button_header">
-            <h3>Search</h3>
-          </button>
+          <button className="Button_header">Search</button>
         </div>
       </div>
       <div className="browse_categories">
@@ -69,11 +77,11 @@ function HomePage() {
         <div className="product_grid">
           {products.slice(0, 8).map((product) => (
             <Link
-              to={`/products/${product.id}`}
+              to={`/products/${product._id}`}
               className="product_card"
-              key={product.id}
+              key={product._id}
             >
-              <img src={product.images[0]} alt={product.name} />
+              <img src={product.images[0].url} alt={product.name} />
               <h4>{product.name}</h4>
               <p>BDT {product.price}</p>
             </Link>
