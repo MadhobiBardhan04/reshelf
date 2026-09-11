@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import "dotenv/config";
 import cors from "cors";
+import productRoutes from "./routes/products.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -43,6 +44,7 @@ app.use("/api/users", userRoutes);
 
 app.use("/api/auth", authRouter);
 
+app.use("/api/products", productRoutes);
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
