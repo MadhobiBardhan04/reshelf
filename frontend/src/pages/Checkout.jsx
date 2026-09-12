@@ -115,10 +115,7 @@ export default function Checkout() {
             </p>
             {group.items.map(({ product }) => (
               <div className="checkout_row" key={product._id}>
-                <img
-                  src={product.images?.[0] || product.image}
-                  alt={product.name}
-                />
+                <img src={product.image} alt={product.name} />
                 <div className="cart_row_info">
                   <h4>{product.name}</h4>
                   <p className="cart_row_category">{product.category}</p>

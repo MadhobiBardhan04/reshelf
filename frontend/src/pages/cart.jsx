@@ -11,10 +11,12 @@ export default function Cart() {
   if (cartItems.length === 0) {
     return (
       <div className="cart">
-        <h1>Your cart is empty</h1>
-        <button className="btn_primary" onClick={() => navigate("/")}>
-          Continue Shopping
-        </button>
+        <div className="cart_empty">
+          <h1>Your cart is empty</h1>
+          <button className="sell_btn" onClick={() => navigate("/")}>
+            Continue Shopping
+          </button>
+        </div>
       </div>
     );
   }
@@ -40,10 +42,7 @@ export default function Cart() {
                 checked={checked}
                 onChange={() => toggleChecked(product._id)}
               />
-              <img
-                src={product.images?.[0] || product.image}
-                alt={product.name}
-              />
+              <img src={product.image} alt={product.name} />
               <div className="cart_row_info">
                 <h4>{product.name}</h4>
                 <p className="cart_row_category">{product.category}</p>

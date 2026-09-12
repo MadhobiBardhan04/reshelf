@@ -1,4 +1,6 @@
-import checkToken from "../middlewares/checkToken";
+import checkToken from "../middlewares/checkToken.js";
+import express from "express";
+const router = express.Router();
 import {
   getCart,
   addToCart,
@@ -8,3 +10,4 @@ import {
 router.get("/", checkToken, getCart);
 router.post("/", checkToken, addToCart);
 router.delete("/:productId", checkToken, removeFromCart);
+export default router;

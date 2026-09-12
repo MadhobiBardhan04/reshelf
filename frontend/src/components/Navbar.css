@@ -1,4 +1,7 @@
 :root {
+  --color-lightest: #8cceee;
+  --color-light: #55afd1;
+  --color-mid: #2f88aa;
   --color-deep: #005f8f;
   --color-navy: #083f75;
   --font-display: "Outfit", serif;
@@ -114,7 +117,6 @@
   align-items: center;
   justify-content: center;
 }
-
 
 .profile_container {
   position: relative;
@@ -271,7 +273,7 @@
   font-size: 14px;
   cursor: pointer;
   text-align: left;
-   transition: 0.15s ease;
+  transition: 0.15s ease;
 }
 
 .profile_dropdown_logout button:hover {
