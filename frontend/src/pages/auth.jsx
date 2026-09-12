@@ -120,10 +120,6 @@ export default function Auth() {
       setLoading(false);
     }
   };
-
-  // =====================================================
-  // EMAIL LOGIN
-  // =====================================================
   const handleEmailLogin = async () => {
     if (!email || !password) {
       setError("Please enter your email and password.");
@@ -161,14 +157,8 @@ export default function Auth() {
       if (!response.ok) {
         throw new Error(data.message || "Login failed.");
       }
-
-      // Save login state
       saveLogin(data.user);
-
-      // Go to homepage
       navigate("/", { replace: true });
-
-      // Reload so Navbar reads new login state
       window.location.reload();
     } catch (error) {
       console.error("Login error:", error);
@@ -178,10 +168,6 @@ export default function Auth() {
       setLoading(false);
     }
   };
-
-  // =====================================================
-  // GOOGLE LOGIN
-  // =====================================================
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
@@ -219,14 +205,8 @@ export default function Auth() {
       if (!response.ok) {
         throw new Error(data.message || "Google login failed.");
       }
-
-      // Save login state
       saveLogin(data.user);
-
-      // Go to homepage
       navigate("/", { replace: true });
-
-      // Reload so Navbar reads new login state
       window.location.reload();
     } catch (error) {
       console.error("Google login error:", error);
@@ -236,19 +216,11 @@ export default function Auth() {
       setLoading(false);
     }
   };
-
-  // =====================================================
-  // SWITCH TO SIGN UP
-  // =====================================================
   const switchToSignUp = () => {
     setIsSignUp(true);
     setError("");
     setPassword("");
   };
-
-  // =====================================================
-  // SWITCH TO SIGN IN
-  // =====================================================
   const switchToSignIn = () => {
     setIsSignUp(false);
     setError("");
@@ -269,9 +241,6 @@ export default function Auth() {
 
       <div className="auth_page">
         <div className="Big_box">
-          {/* =========================
-              SIGN UP FIELDS
-          ========================= */}
           {isSignUp && (
             <>
               <div className="heading1">
@@ -305,10 +274,6 @@ export default function Auth() {
               </div>
             </>
           )}
-
-          {/* =========================
-              EMAIL
-          ========================= */}
           <div className={isSignUp ? "heading2" : "heading1"}>
             <h5>Email</h5>
           </div>
@@ -323,10 +288,6 @@ export default function Auth() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
-          {/* =========================
-              PASSWORD
-          ========================= */}
           <div className="heading2">
             <h5>Password</h5>
           </div>
@@ -346,20 +307,8 @@ export default function Auth() {
               onClick={() => setShowPassword(!showPassword)}
             />
           </div>
-
-          {/* =========================
-              FORGOT PASSWORD
-          ========================= */}
           {!isSignUp && <div className="forgot-password">Forgot password?</div>}
-
-          {/* =========================
-              ERROR
-          ========================= */}
           {error && <p className="auth-error">{error}</p>}
-
-          {/* =========================
-              MAIN BUTTON
-          ========================= */}
           <div className="btn2">
             <button
               onClick={isSignUp ? handleEmailSignup : handleEmailLogin}
@@ -374,17 +323,9 @@ export default function Auth() {
                   : "Sign In"}
             </button>
           </div>
-
-          {/* =========================
-              OR
-          ========================= */}
           <div className="heading3">
             <h6>────────────── or continue with ──────────────</h6>
           </div>
-
-          {/* =========================
-              GOOGLE / APPLE
-          ========================= */}
           <div className="btn3">
             <button onClick={handleGoogleLogin} disabled={loading}>
               <FcGoogle className="social-icon" />
@@ -393,19 +334,7 @@ export default function Auth() {
                 {isSignUp ? "Sign Up with Google" : "Sign In with Google"}
               </span>
             </button>
-
-            <button disabled>
-              <FaApple className="social-icon apple-icon" />
-
-              <span>
-                {isSignUp ? "Sign Up with Apple" : "Sign In with Apple"}
-              </span>
-            </button>
           </div>
-
-          {/* =========================
-              SWITCH SIGN IN / SIGN UP
-          ========================= */}
           <div className="heading4">
             {isSignUp ? (
               <>
