@@ -56,7 +56,7 @@ export default function Navbar() {
       </div>
 
       <div className="nav_actions">
-        <button className="cart_btn" onClick={() => navigate("/checkout")}>
+        <button className="cart_btn" onClick={() => navigate("/cart")}>
           <FaShoppingCart />
         </button>
 

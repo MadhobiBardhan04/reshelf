@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaStore, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-<<<<<<< HEAD
-import { getProductById } from "../data/products";
-import { useCart } from "./cartContext";
-=======
->>>>>>> c694d64652ac8faa94e788a5d0b9fee8129a8517
+
+import { useCart } from "./CartContext";
 import "./ProductDetails.css";
 
 const TABS = ["Description", "Specifications"];
 
 export default function ProductDetails() {
   const { id } = useParams();
-
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
   const [activeTab, setActiveTab] = useState("Description");
@@ -29,6 +26,7 @@ export default function ProductDetails() {
       })
       .then((data) => {
         setProduct(data);
+        console.log(product);
         setLoading(false);
       })
       .catch((error) => {
@@ -45,22 +43,14 @@ export default function ProductDetails() {
     return <p className="not_found">Product not found.</p>;
   }
 
-  const {
-    name,
-    price,
-    category,
-    condition,
-    specs,
-    description,
-    images,
-  } = product;
+  const { name, price, category, condition, specs, description, images } =
+    product;
 
-  const nextImage = () =>
-    setActiveImage((i) => (i + 1) % images.length);
+  const nextImage = () => setActiveImage((i) => (i + 1) % images.length);
 
   const prevImage = () =>
     setActiveImage((i) => (i - 1 + images.length) % images.length);
-  const { addToCart } = useCart();
+
   return (
     <div className="product_details">
       <div className="pd_gallery">
@@ -81,10 +71,7 @@ export default function ProductDetails() {
             </>
           )}
 
-          <img
-            src={images[activeImage].url}
-            alt={name}
-          />
+          <img src={images[activeImage].url} alt={name} />
         </div>
 
         {images.length > 1 && (
@@ -92,9 +79,7 @@ export default function ProductDetails() {
             {images.map((image, i) => (
               <button
                 key={i}
-                className={`pd_thumb ${
-                  i === activeImage ? "active" : ""
-                }`}
+                className={`pd_thumb ${i === activeImage ? "active" : ""}`}
                 onClick={() => setActiveImage(i)}
               >
                 <img src={image.url} alt="" />
@@ -121,22 +106,16 @@ export default function ProductDetails() {
           </div>
         </div>
 
-<<<<<<< HEAD
         <button className="pd_add_btn" onClick={() => addToCart(product)}>
           Add to cart
         </button>
-=======
-        <button className="pd_add_btn">Add to cart</button>
 
->>>>>>> c694d64652ac8faa94e788a5d0b9fee8129a8517
         <div className="pd_tabs_section">
           <div className="pd_tabs">
             {TABS.map((tab) => (
               <button
                 key={tab}
-                className={`pd_tab ${
-                  activeTab === tab ? "active" : ""
-                }`}
+                className={`pd_tab ${activeTab === tab ? "active" : ""}`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -150,9 +129,7 @@ export default function ProductDetails() {
             )}
 
             {activeTab === "Description" && (
-              <p>
-                {description || "No description provided."}
-              </p>
+              <p>{description || "No description provided."}</p>
             )}
           </div>
         </div>

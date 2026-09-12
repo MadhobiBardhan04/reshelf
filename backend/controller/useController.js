@@ -1,4 +1,3 @@
-//ayesha useController.js//
 import { hashPassword } from "../utils/helpers.js";
 import User from "../model/user.js";
 import jwt from "jsonwebtoken";

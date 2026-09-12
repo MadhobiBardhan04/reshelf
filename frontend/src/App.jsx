@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./homepage";
 import Auth from "./pages/auth.jsx";
 import Cart from "./pages/cart.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Sell from "./pages/sell.jsx";
 import ProductDetails from "./pages/ProductDetails";
@@ -23,7 +24,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/sell" element={<Sell />} />
-        <Route path="/checkout" element={<Cart />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/listings" element={<AllListings />} />
