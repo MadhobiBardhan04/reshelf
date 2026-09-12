@@ -13,16 +13,16 @@ import { useEffect, useState } from "react";
 function HomePage() {
   const [products, setProducts] = useState([]);
 
-useEffect(() => {
-  fetch("http://localhost:4000/api/products")
-    .then((response) => response.json())
-    .then((data) => {
-      setProducts(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching products:", error);
-    });
-}, []);
+  useEffect(() => {
+    fetch("http://localhost:4000/api/products")
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  }, []);
   const categories = [
     { icon: "📚", name: "Books & Textbooks", path: "books" },
     { icon: "💻", name: "Laptops & Computers", path: "laptops" },
@@ -39,8 +39,8 @@ useEffect(() => {
         <h1>Buy & Sell Student Essentials</h1>
 
         <h2>
-            Trusted student marketplace — books, gadgets, stationery, study
-            essentials & more
+          Trusted student marketplace — books, gadgets, stationery, study
+          essentials & more
         </h2>
         <div className="SearchBar_header">
           <FaSearch className="Search_icon" />
@@ -165,11 +165,21 @@ useEffect(() => {
           </div>
           <div className="sixth_column">
             <h3> Trust & Support </h3>
-            <h4>Trust & Safety</h4>
-            <h4>Help Center</h4>
-            <h4>Contact Us</h4>
-            <h4>Report a Problem</h4>
-            <h4>Feedback</h4>
+            <h4>
+              <Link to="/trust-safety">Trust & Safety</Link>
+            </h4>
+            <h4>
+              <Link to="/help-center">Help Center</Link>
+            </h4>
+            <h4>
+              <Link to="/contact-us">Contact Us</Link>
+            </h4>
+            <h4>
+              <Link to="/report-problem">Report a Problem</Link>
+            </h4>
+            <h4>
+              <Link to="/feedback">Feedback</Link>
+            </h4>
           </div>
         </div>
         <div className="Additional_things">

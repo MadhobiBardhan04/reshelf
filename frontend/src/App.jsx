@@ -15,6 +15,11 @@ import Settings from "./pages/Settings";
 import Favorites from "./pages/Favorites.jsx";
 import BuyingGuide from "./pages/BuyingGuide.jsx";
 import SellingGuide from "./pages/SellingGuide.jsx";
+import TrustSafety from "./pages/TrustSafety";
+import HelpCenter from "./pages/HelpCenter";
+import ContactUs from "./pages/ContactUs";
+import ReportProblem from "./pages/ReportProblem";
+import Feedback from "./pages/Feedback";
 
 function App() {
   return (
@@ -35,6 +40,11 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/buying-guide" element={<BuyingGuide />} />
         <Route path="/selling-guide" element={<SellingGuide />} />
+        <Route path="/trust-safety" element={<TrustSafety />} />
+        <Route path="/help-center" element={<HelpCenter />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/report-problem" element={<ReportProblem />} />
+        <Route path="/feedback" element={<Feedback />} />
       </Routes>
     </div>
   );

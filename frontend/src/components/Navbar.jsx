@@ -16,7 +16,6 @@ import "./Navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
-
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn") === "true",
   );
@@ -30,17 +29,18 @@ export default function Navbar() {
   try {
     user = storedUser ? JSON.parse(storedUser) : null;
   } catch (error) {
+    console.error("Invalid user data:", error);
+
     user = null;
   }
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user");
-
     setIsLoggedIn(false);
     setShowProfile(false);
-
     navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -48,22 +48,18 @@ export default function Navbar() {
       <Link to="/" className="logo-link">
         ReShelf
       </Link>
-
       <div className="SearchBar_header1">
         <FaSearch className="Search_icon_0" />
 
         <input type="text" placeholder="search for items" />
       </div>
-
       <div className="nav_actions">
         <button className="cart_btn" onClick={() => navigate("/cart")}>
           <FaShoppingCart />
         </button>
-
         <button className="sell_btn" onClick={() => navigate("/sell")}>
           Sell
         </button>
-
         {isLoggedIn ? (
           <div className="profile_container">
             <button
@@ -74,7 +70,6 @@ export default function Navbar() {
             >
               <FaUser />
             </button>
-
             {showProfile && (
               <div className="profile_dropdown">
                 <div className="profile_dropdown_header">
@@ -88,11 +83,11 @@ export default function Navbar() {
                     <p>{user?.email || "No email available"}</p>
                   </div>
                 </div>
-
                 <div className="profile_dropdown_menu">
                   <button
                     onClick={() => {
                       setShowProfile(false);
+
                       navigate("/profile");
                     }}
                   >
@@ -100,10 +95,10 @@ export default function Navbar() {
 
                     <span>My Profile</span>
                   </button>
-
                   <button
                     onClick={() => {
                       setShowProfile(false);
+
                       navigate("/listings");
                     }}
                   >
@@ -113,10 +108,10 @@ export default function Navbar() {
 
                     <small>4</small>
                   </button>
-
                   <button
                     onClick={() => {
                       setShowProfile(false);
+
                       navigate("/favorites");
                     }}
                   >
@@ -126,10 +121,10 @@ export default function Navbar() {
 
                     <small>0</small>
                   </button>
-
                   <button
                     onClick={() => {
                       setShowProfile(false);
+
                       navigate("/settings");
                     }}
                   >
@@ -138,7 +133,6 @@ export default function Navbar() {
                     <span>Settings</span>
                   </button>
                 </div>
-
                 <div className="profile_dropdown_logout">
                   <button onClick={handleLogout}>
                     <FiLogOut />

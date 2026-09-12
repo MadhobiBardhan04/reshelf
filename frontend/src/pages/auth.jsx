@@ -2,7 +2,8 @@ import "./auth.css";
 
 import { FaEnvelope, FaLock, FaEye, FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -11,7 +12,6 @@ import { auth } from "../../firebase.js";
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
 
   const [username, setUsername] = useState("");
@@ -27,16 +27,44 @@ export default function Auth() {
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
+  // =====================================================
+  // IF ALREADY LOGGED IN, DON'T SHOW AUTH PAGE
+  // =====================================================
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (isLoggedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
+
+  // =====================================================
+  // SAVE LOGIN INFORMATION
+  // =====================================================
+  const saveLogin = (user) => {
+    localStorage.setItem("isLoggedIn", "true");
+
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  };
+
+  // =====================================================
+  // EMAIL SIGN UP
+  // =====================================================
   const handleEmailSignup = async () => {
-    if (!email || !password) {
-      setError("Please enter your email and password.");
+    if (!username || !displayName || !email || !password) {
+      setError("Please fill in all fields.");
       return;
     }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address (e.g. name@example.com).");
       return;
     }
+
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       return;
@@ -65,26 +93,33 @@ export default function Auth() {
       let data = {};
 
       if (text) {
-        data = JSON.parse(text);
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = {};
+        }
       }
 
       if (!response.ok) {
         throw new Error(data.message || "Signup failed.");
       }
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // Save login state
+      saveLogin(data.user);
 
-      navigate("/");
+      // Go to homepage
+      navigate("/", { replace: true });
+
+      // Reload so Navbar reads new login state
       window.location.reload();
     } catch (error) {
       console.error("Signup error:", error);
+
       setError(error.message || "Signup failed.");
     } finally {
       setLoading(false);
     }
   };
-
   const handleEmailLogin = async () => {
     if (!email || !password) {
       setError("Please enter your email and password.");
@@ -112,25 +147,27 @@ export default function Auth() {
       let data = {};
 
       if (text) {
-        data = JSON.parse(text);
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = {};
+        }
       }
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed.");
       }
-
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("user", JSON.stringify(data.user));
-
+      saveLogin(data.user);
+      navigate("/", { replace: true });
       window.location.reload();
     } catch (error) {
       console.error("Login error:", error);
+
       setError(error.message || "Login failed.");
     } finally {
       setLoading(false);
     }
   };
-
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
@@ -158,32 +195,32 @@ export default function Auth() {
       let data = {};
 
       if (text) {
-        data = JSON.parse(text);
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = {};
+        }
       }
 
       if (!response.ok) {
         throw new Error(data.message || "Google login failed.");
       }
-
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      navigate("/");
+      saveLogin(data.user);
+      navigate("/", { replace: true });
       window.location.reload();
     } catch (error) {
       console.error("Google login error:", error);
+
       setError(error.message || "Google login failed.");
     } finally {
       setLoading(false);
     }
   };
-
   const switchToSignUp = () => {
     setIsSignUp(true);
     setError("");
     setPassword("");
   };
-
   const switchToSignIn = () => {
     setIsSignUp(false);
     setError("");
@@ -237,7 +274,6 @@ export default function Auth() {
               </div>
             </>
           )}
-
           <div className={isSignUp ? "heading2" : "heading1"}>
             <h5>Email</h5>
           </div>
@@ -252,7 +288,6 @@ export default function Auth() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
           <div className="heading2">
             <h5>Password</h5>
           </div>
@@ -272,11 +307,8 @@ export default function Auth() {
               onClick={() => setShowPassword(!showPassword)}
             />
           </div>
-
           {!isSignUp && <div className="forgot-password">Forgot password?</div>}
-
           {error && <p className="auth-error">{error}</p>}
-
           <div className="btn2">
             <button
               onClick={isSignUp ? handleEmailSignup : handleEmailLogin}
@@ -291,29 +323,18 @@ export default function Auth() {
                   : "Sign In"}
             </button>
           </div>
-
           <div className="heading3">
             <h6>────────────── or continue with ──────────────</h6>
           </div>
-
           <div className="btn3">
-            <button onClick={handleGoogleLogin}>
+            <button onClick={handleGoogleLogin} disabled={loading}>
               <FcGoogle className="social-icon" />
 
               <span>
                 {isSignUp ? "Sign Up with Google" : "Sign In with Google"}
               </span>
             </button>
-
-            <button>
-              <FaApple className="social-icon apple-icon" />
-
-              <span>
-                {isSignUp ? "Sign Up with Apple" : "Sign In with Apple"}
-              </span>
-            </button>
           </div>
-
           <div className="heading4">
             {isSignUp ? (
               <>

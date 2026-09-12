@@ -1,0 +1,35 @@
+.support-page {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.support-page h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.support-intro {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.support-card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.support-card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+}
+
+.support-card p {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+}
