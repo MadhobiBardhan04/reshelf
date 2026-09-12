@@ -2,7 +2,8 @@ import "./auth.css";
 
 import { FaEnvelope, FaLock, FaEye, FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -11,7 +12,6 @@ import { auth } from "../../firebase.js";
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
 
   const [username, setUsername] = useState("");
@@ -27,16 +27,44 @@ export default function Auth() {
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
+  // =====================================================
+  // IF ALREADY LOGGED IN, DON'T SHOW AUTH PAGE
+  // =====================================================
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (isLoggedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
+
+  // =====================================================
+  // SAVE LOGIN INFORMATION
+  // =====================================================
+  const saveLogin = (user) => {
+    localStorage.setItem("isLoggedIn", "true");
+
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  };
+
+  // =====================================================
+  // EMAIL SIGN UP
+  // =====================================================
   const handleEmailSignup = async () => {
-    if (!email || !password) {
-      setError("Please enter your email and password.");
+    if (!username || !displayName || !email || !password) {
+      setError("Please fill in all fields.");
       return;
     }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address (e.g. name@example.com).");
       return;
     }
+
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       return;
@@ -65,26 +93,37 @@ export default function Auth() {
       let data = {};
 
       if (text) {
-        data = JSON.parse(text);
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = {};
+        }
       }
 
       if (!response.ok) {
         throw new Error(data.message || "Signup failed.");
       }
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // Save login state
+      saveLogin(data.user);
 
-      navigate("/");
+      // Go to homepage
+      navigate("/", { replace: true });
+
+      // Reload so Navbar reads new login state
       window.location.reload();
     } catch (error) {
       console.error("Signup error:", error);
+
       setError(error.message || "Signup failed.");
     } finally {
       setLoading(false);
     }
   };
 
+  // =====================================================
+  // EMAIL LOGIN
+  // =====================================================
   const handleEmailLogin = async () => {
     if (!email || !password) {
       setError("Please enter your email and password.");
@@ -112,25 +151,37 @@ export default function Auth() {
       let data = {};
 
       if (text) {
-        data = JSON.parse(text);
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = {};
+        }
       }
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed.");
       }
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // Save login state
+      saveLogin(data.user);
 
+      // Go to homepage
+      navigate("/", { replace: true });
+
+      // Reload so Navbar reads new login state
       window.location.reload();
     } catch (error) {
       console.error("Login error:", error);
+
       setError(error.message || "Login failed.");
     } finally {
       setLoading(false);
     }
   };
 
+  // =====================================================
+  // GOOGLE LOGIN
+  // =====================================================
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
@@ -158,32 +209,46 @@ export default function Auth() {
       let data = {};
 
       if (text) {
-        data = JSON.parse(text);
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = {};
+        }
       }
 
       if (!response.ok) {
         throw new Error(data.message || "Google login failed.");
       }
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // Save login state
+      saveLogin(data.user);
 
-      navigate("/");
+      // Go to homepage
+      navigate("/", { replace: true });
+
+      // Reload so Navbar reads new login state
       window.location.reload();
     } catch (error) {
       console.error("Google login error:", error);
+
       setError(error.message || "Google login failed.");
     } finally {
       setLoading(false);
     }
   };
 
+  // =====================================================
+  // SWITCH TO SIGN UP
+  // =====================================================
   const switchToSignUp = () => {
     setIsSignUp(true);
     setError("");
     setPassword("");
   };
 
+  // =====================================================
+  // SWITCH TO SIGN IN
+  // =====================================================
   const switchToSignIn = () => {
     setIsSignUp(false);
     setError("");
@@ -204,6 +269,9 @@ export default function Auth() {
 
       <div className="auth_page">
         <div className="Big_box">
+          {/* =========================
+              SIGN UP FIELDS
+          ========================= */}
           {isSignUp && (
             <>
               <div className="heading1">
@@ -238,6 +306,9 @@ export default function Auth() {
             </>
           )}
 
+          {/* =========================
+              EMAIL
+          ========================= */}
           <div className={isSignUp ? "heading2" : "heading1"}>
             <h5>Email</h5>
           </div>
@@ -253,6 +324,9 @@ export default function Auth() {
             />
           </div>
 
+          {/* =========================
+              PASSWORD
+          ========================= */}
           <div className="heading2">
             <h5>Password</h5>
           </div>
@@ -273,10 +347,19 @@ export default function Auth() {
             />
           </div>
 
+          {/* =========================
+              FORGOT PASSWORD
+          ========================= */}
           {!isSignUp && <div className="forgot-password">Forgot password?</div>}
 
+          {/* =========================
+              ERROR
+          ========================= */}
           {error && <p className="auth-error">{error}</p>}
 
+          {/* =========================
+              MAIN BUTTON
+          ========================= */}
           <div className="btn2">
             <button
               onClick={isSignUp ? handleEmailSignup : handleEmailLogin}
@@ -292,12 +375,18 @@ export default function Auth() {
             </button>
           </div>
 
+          {/* =========================
+              OR
+          ========================= */}
           <div className="heading3">
             <h6>────────────── or continue with ──────────────</h6>
           </div>
 
+          {/* =========================
+              GOOGLE / APPLE
+          ========================= */}
           <div className="btn3">
-            <button onClick={handleGoogleLogin}>
+            <button onClick={handleGoogleLogin} disabled={loading}>
               <FcGoogle className="social-icon" />
 
               <span>
@@ -305,7 +394,7 @@ export default function Auth() {
               </span>
             </button>
 
-            <button>
+            <button disabled>
               <FaApple className="social-icon apple-icon" />
 
               <span>
@@ -314,6 +403,9 @@ export default function Auth() {
             </button>
           </div>
 
+          {/* =========================
+              SWITCH SIGN IN / SIGN UP
+          ========================= */}
           <div className="heading4">
             {isSignUp ? (
               <>
