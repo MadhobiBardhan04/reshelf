@@ -1,0 +1,112 @@
+.cart_page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 6rem;
+}
+.cart_page h1 {
+  color: var(--color-navy);
+  margin-bottom: 1.5rem;
+}
+.btn_primary {
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: "Outfit", sans-serif;
+}
+.seller_group {
+  margin-bottom: 1.5rem;
+  border-top: 1px solid var(--color-lightest);
+  padding-top: 1rem;
+}
+.seller_group:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.seller_group_name {
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.cart_row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+.cart_row img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.cart_row_info {
+  flex: 1;
+}
+.cart_row_info h4 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+}
+.cart_row_category {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-mid);
+}
+.cart_row_price {
+  margin: 0.25rem 0 0;
+  font-weight: 600;
+  color: var(--color-deep);
+}
+
+.cart_remove_btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-lightest);
+  color: var(--color-navy);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.cart_footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid var(--color-lightest);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.cart_select_all {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+.cart_subtotal {
+  flex: 1;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin: 0;
+  text-align: right;
+}
+
+@media (max-width: 500px) {
+  .cart_footer {
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+  }
+  .cart_subtotal {
+    text-align: left;
+    order: 3;
+    width: 100%;
+  }
+}
