@@ -42,7 +42,7 @@ export default function Checkout() {
       alert("Please fill in your address.");
       return;
     }
-    // TODO: POST to /api/orders once that endpoint exists
+
     console.log({
       location,
       city,

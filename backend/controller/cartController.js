@@ -1,4 +1,3 @@
-// controller/cartController.js
 import Cart from "../model/cart.js";
 
 export const getCart = async (req, res) => {
@@ -7,24 +6,7 @@ export const getCart = async (req, res) => {
   );
   res.status(200).json(cart || { items: [] });
 };
-/*
-export const addToCart = async (req, res) => {
-  const { productId } = req.body;
-  let cart = await Cart.findOne({ user: req.user._id });
 
-  if (!cart) {
-    cart = await Cart.create({
-      user: req.user.id,
-      items: [{ product: productId }],
-    });
-  } else if (!cart.items.some((i) => i.product.toString() === productId)) {
-    cart.items.push({ product: productId });
-    await cart.save();
-  }
-
-  res.status(200).json(cart);
-};
-*/
 export const addToCart = async (req, res) => {
   try {
     const { productId } = req.body;
@@ -46,7 +28,7 @@ export const addToCart = async (req, res) => {
         { new: true },
       );
     }
-
+    cart = await cart.populate("items.product");
     res.status(200).json(cart);
   } catch (error) {
     console.error(error);

@@ -1,28 +1,19 @@
 import express from "express";
-import Product from "../model/Product.js";
+import {
+  getProducts,
+  getProductsByCategory,
+  getProductById,
+  createProduct,
+} from "../controller/productController.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: "Failed to fetch products" });
-    }
-});
+router.get("/", getProducts);
 
-router.get("/:id", async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id);
+router.get("/category/:category", getProductsByCategory);
 
-        if (!product) {
-            return res.status(404).json({ message: "Product not found" });
-        }
+router.get("/:id", getProductById);
 
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ message: "Failed to fetch product" });
-    }
-});
+router.post("/", createProduct);
+
 export default router;

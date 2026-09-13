@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../pages/CartContext.jsx";
 
 import {
   FaSearch,
@@ -24,6 +25,8 @@ export default function Navbar() {
 
   const storedUser = localStorage.getItem("user");
 
+  const { clearCart } = useCart();
+
   let user = null;
 
   try {
@@ -34,11 +37,21 @@ export default function Navbar() {
     user = null;
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:4000/api/auth/logout", {
+        method: "POST", // confirm this matches how the route is registered in authRoutes.js
+        credentials: "include", // required — this is what lets the browser send the cookie to be cleared
+      });
+    } catch (error) {
+      console.error("Logout request failed:", error);
+    }
+
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user");
     setIsLoggedIn(false);
     setShowProfile(false);
+    clearCart();
     navigate("/");
     window.location.reload();
   };

@@ -1,4 +1,3 @@
-// context/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
@@ -6,9 +5,8 @@ const CartContext = createContext();
 const API_URL = "http://localhost:4000/api/cart";
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]); // [{ product, checked }]
+  const [cartItems, setCartItems] = useState([]);
 
-  // load existing cart on app start
   useEffect(() => {
     fetch(API_URL, { credentials: "include" })
       .then((res) => res.json())
@@ -75,6 +73,9 @@ export function CartProvider({ children }) {
     setCartItems((prev) => prev.map((item) => ({ ...item, checked })));
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
   const checkedItems = cartItems.filter((item) => item.checked);
 
   return (
@@ -85,6 +86,7 @@ export function CartProvider({ children }) {
         removeFromCart,
         toggleChecked,
         toggleAll,
+        clearCart,
         checkedItems,
       }}
     >
