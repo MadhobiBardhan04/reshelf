@@ -9,6 +9,7 @@ import "dotenv/config";
 import cors from "cors";
 import productRoutes from "./routes/products.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -47,6 +48,7 @@ app.use("/api/auth", authRouter);
 
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/admin", adminRoutes);
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });

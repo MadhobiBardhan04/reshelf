@@ -8,6 +8,12 @@ const userSchema = new Schema(
       sparse: true,
     },
 
+    // model/user.js
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
     username: {
       type: String,
       unique: true,

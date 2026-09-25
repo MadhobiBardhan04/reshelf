@@ -40,8 +40,8 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       await fetch("http://localhost:4000/api/auth/logout", {
-        method: "POST", // confirm this matches how the route is registered in authRoutes.js
-        credentials: "include", // required — this is what lets the browser send the cookie to be cleared
+        method: "POST",
+        credentials: "include",
       });
     } catch (error) {
       console.error("Logout request failed:", error);

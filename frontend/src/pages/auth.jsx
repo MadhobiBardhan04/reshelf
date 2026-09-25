@@ -106,9 +106,11 @@ export default function Auth() {
 
       // Save login state
       saveLogin(data.user);
-
-      // Go to homepage
-      navigate("/", { replace: true });
+      if (data.user.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
 
       // Reload so Navbar reads new login state
       window.location.reload();
@@ -158,7 +160,11 @@ export default function Auth() {
         throw new Error(data.message || "Login failed.");
       }
       saveLogin(data.user);
-      navigate("/", { replace: true });
+      if (data.user.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
       window.location.reload();
     } catch (error) {
       console.error("Login error:", error);
@@ -206,7 +212,11 @@ export default function Auth() {
         throw new Error(data.message || "Google login failed.");
       }
       saveLogin(data.user);
-      navigate("/", { replace: true });
+      if (data.user.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
       window.location.reload();
     } catch (error) {
       console.error("Google login error:", error);

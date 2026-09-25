@@ -3,16 +3,11 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import adminAuth from "../firebaseAdmin.js";
 
-const createTokenCookie = (res, userId) => {
-  const token = jwt.sign(
-    {
-      id: userId,
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "7d",
-    },
-  );
+// authController.js
+const createTokenCookie = (res, userId, role) => {
+  const token = jwt.sign({ id: userId, role }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
 
   res.cookie("token", token, {
     httpOnly: true,
@@ -50,7 +45,7 @@ export const signup = async (req, res) => {
       provider: "email",
     });
 
-    createTokenCookie(res, user._id);
+    createTokenCookie(res, user._id, user.role);
 
     return res.status(201).json({
       message: "Account created successfully",
@@ -60,6 +55,7 @@ export const signup = async (req, res) => {
         displayName: user.displayName,
         email: user.email,
         provider: user.provider,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -103,7 +99,7 @@ export const login = async (req, res) => {
       });
     }
 
-    createTokenCookie(res, user._id);
+    createTokenCookie(res, user._id, user.role);
 
     return res.status(200).json({
       message: "Login successful",
@@ -113,6 +109,7 @@ export const login = async (req, res) => {
         displayName: user.displayName,
         email: user.email,
         provider: user.provider,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -187,7 +184,7 @@ export const firebaseLogin = async (req, res) => {
       }
     }
 
-    createTokenCookie(res, user._id);
+    createTokenCookie(res, user._id, user.role);
 
     return res.status(200).json({
       message: "Google authentication successful",
@@ -198,6 +195,7 @@ export const firebaseLogin = async (req, res) => {
         email: user.email,
         photoURL: user.photoURL,
         provider: user.provider,
+        role: user.role,
       },
     });
   } catch (error) {

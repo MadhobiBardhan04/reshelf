@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import HomePage from "./homepage";
 import Auth from "./pages/auth.jsx";
 import Cart from "./pages/cart.jsx";
@@ -20,11 +21,15 @@ import HelpCenter from "./pages/HelpCenter";
 import ContactUs from "./pages/ContactUs";
 import ReportProblem from "./pages/ReportProblem";
 import Feedback from "./pages/Feedback";
+import RequireAdmin from "./components/requireAdmin.jsx";
+import AdminDashboard from "./admin/dashboard.jsx";
 
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
   return (
     <div className="app">
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<Auth />} />
@@ -45,6 +50,16 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/report-problem" element={<ReportProblem />} />
         <Route path="/feedback" element={<Feedback />} />
+
+        <Route
+          path="/admin/*"
+          element={
+            <RequireAdmin>
+              {" "}
+              <AdminDashboard />{" "}
+            </RequireAdmin>
+          }
+        />
       </Routes>
     </div>
   );

@@ -81,7 +81,15 @@ function HomePage() {
               className="product_card"
               key={product._id}
             >
-              <img src={product.images[0].url} alt={product.name} />
+              <img
+                src={
+                  product.images?.[0]?.url ||
+                  product.image ||
+                  "/placeholder.png"
+                }
+                alt={product.name}
+                key={product._id}
+              />
               <h4>{product.name}</h4>
               <p>BDT {product.price}</p>
             </Link>
