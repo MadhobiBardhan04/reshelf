@@ -32,18 +32,6 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
 
-    images: [
-      {
-        url: {
-          type: String,
-          required: true,
-        },
-        cloudinaryPublicId: {
-          type: String,
-          default: "",
-        },
-      },
-    ],
     cloudinaryPublicId: {
       type: String,
       default: "",
