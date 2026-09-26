@@ -574,3 +574,32 @@
     padding: 18px;
   }
 }
+
+.my_listing_approval {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.my_listing_approval.pending {
+  color: #9a6400;
+  background: #fff4e0;
+}
+
+.my_listing_approval.approved {
+  color: #24743b;
+  background: #e3f5e8;
+}
+
+.my_listing_approval.rejected {
+  color: #a52c2c;
+  background: #fce8e8;
+}
+
+.my_listing_rejection_reason {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #888;
+}

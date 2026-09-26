@@ -52,17 +52,6 @@ export default function AdminSidebar() {
             Orders
           </NavLink>
 
-          {/* PRODUCTS TO REVIEW */}
-          <NavLink
-            to="/admin/review"
-            className={({ isActive }) =>
-              isActive
-                ? "admin-nav-link active"
-                : "admin-nav-link"
-            }
-          >
-            Products to Review
-          </NavLink>
 
         </nav>
 

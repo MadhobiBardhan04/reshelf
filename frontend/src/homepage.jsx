@@ -1,5 +1,5 @@
 import "./homepage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
@@ -11,7 +11,16 @@ import { FaShoppingCart } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 function HomePage() {
+   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    const trimmed = searchQuery.trim();
+    if (!trimmed) return;
+
+    navigate(`/listings?q=${encodeURIComponent(trimmed)}`);
+  };
 
   useEffect(() => {
     fetch("http://localhost:4000/api/products")
@@ -42,10 +51,20 @@ function HomePage() {
           Trusted student marketplace — books, gadgets, stationery, study
           essentials & more
         </h2>
-        <div className="SearchBar_header">
+                <div className="SearchBar_header">
           <FaSearch className="Search_icon" />
-          <input type="text" placeholder="What are you looking for?" />
-          <button className="Button_header">Search</button>
+          <input
+            type="text"
+            placeholder="What are you looking for?"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSearch();
+            }}
+          />
+          <button className="Button_header" onClick={handleSearch}>
+            Search
+          </button>
         </div>
       </div>
       <div className="browse_categories">

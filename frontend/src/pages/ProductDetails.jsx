@@ -37,7 +37,9 @@ export default function ProductDetails() {
     setLoading(true);
     setProduct(null);
 
-    fetch(`http://localhost:4000/api/products/${id}`)
+    fetch(`http://localhost:4000/api/products/${id}`, {
+  credentials: "include",
+})
       .then((response) => {
         if (!response.ok) {
           throw new Error("Product not found");

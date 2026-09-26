@@ -309,7 +309,25 @@ export default function Profile() {
                   >
                     {product.status || "available"}
                   </span>
+                  <span
+                    className={`my_listing_approval ${
+                      product.approvalStatus || "pending"
+                    }`}
+                  >
+                    {product.approvalStatus === "approved"
+                      ? "Approved"
+                      : product.approvalStatus === "rejected"
+                        ? "Rejected by admin"
+                        : "Pending admin review"}
+                  </span>
 
+                  {product.approvalStatus === "rejected" &&
+                    product.rejectionReason && (
+                      <p className="my_listing_rejection_reason">
+                        Reason: {product.rejectionReason}
+                      </p>
+                    )}
+                    
                   <h3>{product.name}</h3>
                   <p className="my_listing_price">৳{product.price}</p>
                   <p>{product.category}</p>

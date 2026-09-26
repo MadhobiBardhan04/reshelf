@@ -1,12 +1,24 @@
 import Product from "../model/Product.js";
 import cloudinary from "../config/cloudinary.js";
 
+const VISIBLE_TO_PUBLIC = {
+  $or: [
+    { approvalStatus: "approved" },
+    { approvalStatus: { $exists: false } },
+  ],
+};
+
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find({
-      $or: [
-        { availabilityStatus: "available" },
-        { availabilityStatus: { $exists: false } },
+      $and: [
+        {
+          $or: [
+            { availabilityStatus: "available" },
+            { availabilityStatus: { $exists: false } },
+          ],
+        },
+        VISIBLE_TO_PUBLIC,
       ],
     })
       .populate("seller", "username displayName email")
@@ -15,10 +27,7 @@ export const getProducts = async (req, res) => {
     res.status(200).json(products);
   } catch (error) {
     console.error(error);
-
-    res.status(500).json({
-      message: "Failed to get products",
-    });
+    res.status(500).json({ message: "Failed to get products" });
   }
 };
 
@@ -26,19 +35,21 @@ export const getProductsByCategory = async (req, res) => {
   try {
     const products = await Product.find({
       category: req.params.category,
-      $or: [
-        { availabilityStatus: "available" },
-        { availabilityStatus: { $exists: false } },
+      $and: [
+        {
+          $or: [
+            { availabilityStatus: "available" },
+            { availabilityStatus: { $exists: false } },
+          ],
+        },
+        VISIBLE_TO_PUBLIC,
       ],
     }).sort({ createdAt: -1 });
 
     res.status(200).json(products);
   } catch (error) {
     console.error(error);
-
-    res.status(500).json({
-      message: "Failed to get products",
-    });
+    res.status(500).json({ message: "Failed to get products" });
   }
 };
 
@@ -50,18 +61,23 @@ export const getProductById = async (req, res) => {
     );
 
     if (!product) {
-      return res.status(404).json({
-        message: "Product not found",
-      });
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const isApproved =
+      product.approvalStatus === "approved" || !product.approvalStatus;
+    const isOwner =
+      req.user && req.user.id === product.seller?._id?.toString();
+    const isAdmin = req.user && req.user.role === "admin";
+
+    if (!isApproved && !isOwner && !isAdmin) {
+      return res.status(404).json({ message: "Product not found" });
     }
 
     res.status(200).json(product);
   } catch (error) {
     console.error(error);
-
-    res.status(500).json({
-      message: "Failed to get product",
-    });
+    res.status(500).json({ message: "Failed to get product" });
   }
 };
 

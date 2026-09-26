@@ -2,10 +2,6 @@ import User from "../model/user.js";
 import Product from "../model/Product.js";
 import Order from "../model/orders.js";
 
-// =========================
-// PRODUCTS
-// =========================
-
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find()
@@ -24,9 +20,42 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-// =========================
-// USERS
-// =========================
+export const updateProductApproval = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, rejectionReason } = req.body;
+
+    const allowedStatuses = ["pending", "approved", "rejected"];
+
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid approval status" });
+    }
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    product.approvalStatus = status;
+    product.rejectionReason = status === "rejected" ? rejectionReason || "" : "";
+
+    await product.save();
+
+    const updatedProduct = await Product.findById(product._id).populate(
+      "seller",
+      "username displayName email",
+    );
+
+    res.status(200).json({
+      message: "Product approval status updated",
+      product: updatedProduct,
+    });
+  } catch (error) {
+    console.error("Update product approval error:", error);
+    res.status(500).json({ message: "Failed to update product approval status" });
+  }
+};
 
 export const getAllUsers = async (req, res) => {
   try {

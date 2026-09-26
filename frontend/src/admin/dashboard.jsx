@@ -362,11 +362,6 @@ export default function AdminDashboard() {
             element={<AdminOrders />}
           />
 
-          <Route
-            path="review"
-            element={<ProductsToReview />}
-          />
-
         </Routes>
 
       </main>

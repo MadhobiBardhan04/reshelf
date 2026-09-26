@@ -12,6 +12,7 @@ import {
 } from "../controller/productController.js";
 
 import checkToken from "../middlewares/checkToken.js";
+import optionalAuth from "../middlewares/optionalAuth.js";
 import upload from "../middlewares/upload.js";
 
 const router = express.Router();
@@ -23,6 +24,6 @@ router.post("/", checkToken, upload.single("image"), createProduct);
 router.patch("/:id/status", checkToken, updateProductStatus);
 router.put("/:id", checkToken, upload.single("image"), updateProduct);
 router.delete("/:id", checkToken, deleteProduct);
-router.get("/:id", getProductById);
+router.get("/:id", optionalAuth, getProductById);
 
 export default router;

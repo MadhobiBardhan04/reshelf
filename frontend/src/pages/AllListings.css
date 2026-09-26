@@ -66,3 +66,40 @@
   padding-top: 0.65rem;
   padding-bottom: 0.75rem;
 }
+
+.listings_search_bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  max-width: 480px;
+}
+
+.listings_search_bar input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid gainsboro;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}
+
+.listings_search_bar input:focus {
+  outline: none;
+  border-color: var(--color-navy, #083f75);
+}
+
+.listings_search_bar button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: var(--color-navy, #083f75);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.listings_message {
+  color: #666;
+  font-family: "Inter", sans-serif;
+  padding: 20px 0;
+}

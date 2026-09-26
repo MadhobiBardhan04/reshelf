@@ -194,7 +194,11 @@ export default function Sell() {
 
           <div className="success_text">
             <strong>{successMessage}</strong>
-            <p>Your item has been added to ReShelf.</p>
+        
+<p>
+  Your item is pending admin review and will appear on ReShelf
+  once approved.
+</p>
           </div>
 
           <button

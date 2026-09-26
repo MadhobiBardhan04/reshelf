@@ -91,3 +91,172 @@
   font-size: 12px;
   color: #888;
 }
+
+/* Filter tabs */
+
+.products-filter-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.products-filter-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid #e0e0e0;
+  background: white;
+  color: #555;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.products-filter-tab.active {
+  background: #111;
+  border-color: #111;
+  color: white;
+}
+
+.products-filter-count {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 12px;
+}
+
+.products-filter-tab.active .products-filter-count {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Approval badges */
+
+.approval-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.approval-badge.pending {
+  background: #fff4e0;
+  color: #9a6400;
+}
+
+.approval-badge.approved {
+  background: #e4f7ea;
+  color: #1c7a3d;
+}
+
+.approval-badge.rejected {
+  background: #fde8e8;
+  color: #b02a2a;
+}
+
+.rejection-reason {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #888;
+  max-width: 220px;
+}
+
+/* Approve / reject actions */
+
+.product-approval-actions {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.approve-btn,
+.reject-btn,
+.cancel-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.approve-btn {
+  background: #1c7a3d;
+  color: white;
+}
+
+.reject-btn {
+  background: #b02a2a;
+  color: white;
+}
+
+.cancel-btn {
+  background: #eee;
+  color: #333;
+}
+
+.approve-btn:disabled,
+.reject-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.no-products {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+}
+
+/* Reject modal */
+
+.product-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.product-modal {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  width: 420px;
+  max-width: 90vw;
+}
+
+.product-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+}
+
+.reject-reason-input {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: inherit;
+  font-size: 13px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.reject-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}

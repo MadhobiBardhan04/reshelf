@@ -6,6 +6,7 @@ import requireAdmin from "../middlewares/requireAdmin.js";
 import {
   getAllUsers,
   getAllProducts,
+  updateProductApproval,
   getAllOrders,
   updateOrderStatus,
   getDashboardStats,
@@ -13,39 +14,18 @@ import {
 
 const router = express.Router();
 
-router.get(
-  "/stats",
-  checkToken,
-  requireAdmin,
-  getDashboardStats
-);
-
-router.get(
-  "/users",
-  checkToken,
-  requireAdmin,
-  getAllUsers
-);
-
-router.get(
-  "/products",
-  checkToken,
-  requireAdmin,
-  getAllProducts
-);
-
-router.get(
-  "/orders",
-  checkToken,
-  requireAdmin,
-  getAllOrders
-);
+router.get("/stats", checkToken, requireAdmin, getDashboardStats);
+router.get("/users", checkToken, requireAdmin, getAllUsers);
+router.get("/products", checkToken, requireAdmin, getAllProducts);
 
 router.patch(
-  "/orders/:id/status",
+  "/products/:id/approval",
   checkToken,
   requireAdmin,
-  updateOrderStatus
+  updateProductApproval,
 );
+
+router.get("/orders", checkToken, requireAdmin, getAllOrders);
+router.patch("/orders/:id/status", checkToken, requireAdmin, updateOrderStatus);
 
 export default router;

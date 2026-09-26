@@ -21,6 +21,15 @@ import "./Navbar.css";
 export default function Navbar() {
   const navigate = useNavigate();
 
+   const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    const trimmed = searchQuery.trim();
+    if (!trimmed) return;
+
+    navigate(`/listings?q=${encodeURIComponent(trimmed)}`);
+  };
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn") === "true"
   );
@@ -40,12 +49,7 @@ export default function Navbar() {
     user = null;
   }
 
-  // Check if logged-in user is admin
   const isAdmin = user?.role === "admin";
-
-  // ==========================================
-  // LOGOUT
-  // ==========================================
 
   const handleLogout = async () => {
     try {
@@ -76,20 +80,12 @@ export default function Navbar() {
     window.location.reload();
   };
 
-  // ==========================================
-  // CLOSE PROFILE
-  // ==========================================
-
   const closeProfile = () => {
     setShowProfile(false);
   };
 
   return (
     <nav className="navbar">
-
-      {/* ========================================
-          LOGO
-      ======================================== */}
 
       <Link
         to="/"
@@ -98,26 +94,23 @@ export default function Navbar() {
         ReShelf
       </Link>
 
-
-      {/* ========================================
-          SEARCH
-      ======================================== */}
-
-      <div className="SearchBar_header1">
-
-        <FaSearch className="Search_icon_0" />
+            <div className="SearchBar_header1">
+        <FaSearch
+          className="Search_icon_0"
+          onClick={handleSearch}
+          style={{ cursor: "pointer" }}
+        />
 
         <input
           type="text"
           placeholder="search for items"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearch();
+          }}
         />
-
       </div>
-
-
-      {/* ========================================
-          RIGHT SIDE
-      ======================================== */}
 
       <div className="nav_actions">
 
@@ -146,11 +139,6 @@ export default function Navbar() {
           Sell
         </button>
 
-
-        {/* ====================================
-            LOGGED IN
-        ==================================== */}
-
         {isLoggedIn ? (
 
           <div className="profile_container">
@@ -170,11 +158,6 @@ export default function Navbar() {
               <FaUser />
             </button>
 
-
-            {/* =================================
-                PROFILE DROPDOWN
-            ================================= */}
-
             {showProfile && (
 
               <div
@@ -183,10 +166,6 @@ export default function Navbar() {
   }`}
 >
 
-
-                {/* =================================
-                    USER HEADER
-                ================================= */}
 
                 <div className="profile_dropdown_header">
 
@@ -214,10 +193,6 @@ export default function Navbar() {
 
                 </div>
 
-
-                {/* =================================
-                    ADMIN MENU
-                ================================= */}
 
                 {isAdmin ? (
 
@@ -278,31 +253,10 @@ export default function Navbar() {
                     </button>
 
 
-                    {/* PRODUCTS TO REVIEW */}
-
-                    <button
-                      onClick={() => {
-                        closeProfile();
-
-                        navigate(
-                          "/admin/review"
-                        );
-                      }}
-                    >
-                      <FaCheckCircle />
-
-                      <span>
-                        Products to Review
-                      </span>
-                    </button>
-
                   </div>
 
                 ) : (
 
-                  /* =================================
-                     NORMAL USER MENU
-                  ================================= */
 
                   <div className="profile_dropdown_menu">
 
