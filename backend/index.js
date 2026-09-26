@@ -3,6 +3,7 @@ import express from "express";
 import userRoutes from "./routes/users.js";
 import authRouter from "./routes/auth.js";
 import log from "./middlewares/logger.js";
+import carbonTracker from "./middlewares/carbonTracker.js"; // NEW
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import "dotenv/config";
@@ -38,17 +39,16 @@ app.use(
   }),
 );
 
-app.use(log);
+app.use(carbonTracker);
 
 app.get("/api", (req, res) => res.json({ message: "API is working" }));
 
 app.use("/api/users", userRoutes);
-
 app.use("/api/auth", authRouter);
-
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/admin", adminRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });

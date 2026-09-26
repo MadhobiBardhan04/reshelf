@@ -30,16 +30,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px); /* full viewport minus navbar height */
+  min-height: calc(100vh - 80px);
   padding: 2rem 1rem;
   box-sizing: border-box;
 }
 
 .Big_box {
-  margin-top: 0; /* remove old margin-top, centering handles vertical position now */
+  margin-top: 0;
   min-height: 450px;
   width: 400px;
-  max-width: 100%; /* shrinks to fit on narrow screens instead of overflowing */
+  max-width: 100%;
   box-sizing: border-box;
   border: 1px solid #e5e7eb;
   background: white;
@@ -50,31 +50,17 @@
 
 @media (max-width: 500px) {
   .auth_page {
-    padding: 0; /* box touches edges, no visible page margin on mobile */
+    padding: 0;
   }
   .Big_box {
     width: 100%;
-    min-height: 100vh; /* fills the screen instead of floating as a card */
+    min-height: 100vh;
     border-radius: 0;
     border: none;
     box-shadow: none;
   }
 }
-/*
-.Big_box {
-  margin-top: 20px;
-  min-height: 530px;
-  width: 400px;
-  box-sizing: border-box;
 
-  border: 1px solid #e5e7eb;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-
-  padding: 20px 30px 25px;
-}
-*/
 .btn {
   display: flex;
   gap: 5px;

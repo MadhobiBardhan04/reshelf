@@ -9,9 +9,11 @@ import { FaTag } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { useNetworkUsage } from "./hooks/useNetworkUsage";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
+  const bytesTransferred = useNetworkUsage();
 
   useEffect(() => {
     fetch("http://localhost:4000/api/products")
@@ -211,6 +213,11 @@ function HomePage() {
           <h4>
             <FaFacebook className="Facebook_icon" /> Facebook
           </h4>
+        </div>
+        <div className="carbon_footprint">
+          <h3>Network Usage</h3>
+
+          <p>Data Transferred: {bytesTransferred.toLocaleString()} bytes</p>
         </div>
       </div>
     </div>
