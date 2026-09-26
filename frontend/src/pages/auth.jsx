@@ -27,9 +27,6 @@ export default function Auth() {
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
-  // =====================================================
-  // IF ALREADY LOGGED IN, DON'T SHOW AUTH PAGE
-  // =====================================================
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
@@ -38,9 +35,6 @@ export default function Auth() {
     }
   }, [navigate]);
 
-  // =====================================================
-  // SAVE LOGIN INFORMATION
-  // =====================================================
   const saveLogin = (user) => {
     localStorage.setItem("isLoggedIn", "true");
 
@@ -49,9 +43,6 @@ export default function Auth() {
     }
   };
 
-  // =====================================================
-  // EMAIL SIGN UP
-  // =====================================================
   const handleEmailSignup = async () => {
     if (!username || !displayName || !email || !password) {
       setError("Please fill in all fields.");
@@ -104,7 +95,6 @@ export default function Auth() {
         throw new Error(data.message || "Signup failed.");
       }
 
-      // Save login state
       saveLogin(data.user);
       if (data.user.role === "admin") {
         navigate("/admin", { replace: true });
@@ -112,7 +102,6 @@ export default function Auth() {
         navigate("/", { replace: true });
       }
 
-      // Reload so Navbar reads new login state
       window.location.reload();
     } catch (error) {
       console.error("Signup error:", error);

@@ -41,16 +41,17 @@ app.use(
 
 app.use(log);
 
-app.get("/api", (req, res) => res.json({ message: "API is working" }));
+app.get("/api", (req, res) => {
+  res.json({ message: "API is working" });
+});
 
 app.use("/api/users", userRoutes);
-
 app.use("/api/auth", authRouter);
-
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
