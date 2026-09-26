@@ -1,17 +1,27 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FaStore, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaStore, FaHeart } from "react-icons/fa";
 
 import { useCart } from "./CartContext";
 import "./ProductDetails.css";
+
+const FAVORITES_KEY = "reshelf_favorites";
+
+function getFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
 
 const TABS = ["Description", "Specifications"];
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { addToCart } = useCart();
+
   const [product, setProduct] = useState(null);
-  const [activeImage, setActiveImage] = useState(0);
   const [activeTab, setActiveTab] = useState("Description");
   const [loading, setLoading] = useState(true);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
@@ -21,8 +31,12 @@ export default function ProductDetails() {
     setShowAddedMessage(true);
     setTimeout(() => setShowAddedMessage(false), 2000);
   };
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+    setProduct(null);
+
     fetch(`http://localhost:4000/api/products/${id}`)
       .then((response) => {
         if (!response.ok) {
@@ -33,7 +47,6 @@ export default function ProductDetails() {
       })
       .then((data) => {
         setProduct(data);
-        console.log(product);
         setLoading(false);
       })
       .catch((error) => {
@@ -41,6 +54,40 @@ export default function ProductDetails() {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    if (!product?._id) return;
+
+    const checkFavorite = () => {
+      const favorites = getFavorites();
+
+      setIsFavorite(favorites.some((item) => item._id === product._id));
+    };
+
+    checkFavorite();
+
+    window.addEventListener("favoritesUpdated", checkFavorite);
+
+    return () => {
+      window.removeEventListener("favoritesUpdated", checkFavorite);
+    };
+  }, [product]);
+
+  const toggleFavorite = () => {
+    if (!product) return;
+
+    const favorites = getFavorites();
+    const alreadySaved = favorites.some((item) => item._id === product._id);
+
+    const updatedFavorites = alreadySaved
+      ? favorites.filter((item) => item._id !== product._id)
+      : [...favorites, product];
+
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
+
+    setIsFavorite(!alreadySaved);
+    window.dispatchEvent(new Event("favoritesUpdated"));
+  };
 
   if (loading) {
     return <p className="not_found">Loading product...</p>;
@@ -50,50 +97,29 @@ export default function ProductDetails() {
     return <p className="not_found">Product not found.</p>;
   }
 
-  const { name, price, category, condition, specs, description, images } =
-    product;
-
-  const nextImage = () => setActiveImage((i) => (i + 1) % images.length);
-
-  const prevImage = () =>
-    setActiveImage((i) => (i - 1 + images.length) % images.length);
+  const {
+    name,
+    price,
+    category,
+    condition,
+    specs,
+    description,
+    image,
+    status,
+  } = product;
 
   return (
     <div className="product_details">
       <div className="pd_gallery">
         <div className="pd_main_image">
-          <span className="pd_image_count">
-            {activeImage + 1} / {images.length}
-          </span>
+          <span className="pd_image_count">1 / 1</span>
 
-          {images.length > 1 && (
-            <>
-              <button className="pd_nav prev" onClick={prevImage}>
-                <FaChevronLeft />
-              </button>
-
-              <button className="pd_nav next" onClick={nextImage}>
-                <FaChevronRight />
-              </button>
-            </>
+          {image ? (
+            <img src={image} alt={name} />
+          ) : (
+            <div className="pd_no_image">No image available</div>
           )}
-
-          <img src={images[activeImage].url} alt={name} />
         </div>
-
-        {images.length > 1 && (
-          <div className="pd_thumbs">
-            {images.map((image, i) => (
-              <button
-                key={i}
-                className={`pd_thumb ${i === activeImage ? "active" : ""}`}
-                onClick={() => setActiveImage(i)}
-              >
-                <img src={image.url} alt="" />
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       <div className="pd_info">
@@ -113,10 +139,24 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        <button className="pd_add_btn" onClick={handleAddToCart}>
-          Add to cart
+        <button
+          className={`pd_favorite_btn ${isFavorite ? "is_favorite" : ""}`}
+          onClick={toggleFavorite}
+        >
+          <FaHeart />
+          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </button>
         {showAddedMessage && <p className="pd_added_msg">Added to cart!</p>}
+
+        {status === "sold" ? (
+          <button className="pd_add_btn" disabled>
+            Sold Out
+          </button>
+        ) : (
+          <button className="pd_add_btn" onClick={() => addToCart(product)}>
+            Add to cart
+          </button>
+        )}
 
         <div className="pd_tabs_section">
           <div className="pd_tabs">

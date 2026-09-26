@@ -30,13 +30,7 @@ export default function AllListings() {
             className="product_card"
             key={product._id}
           >
-            <img
-              src={
-                product.images?.[0]?.url || product.image || "/placeholder.png"
-              }
-              alt={product.name}
-              key={product._id}
-            />
+            <img src={product.image || "/placeholder.png"} alt={product.name} />
 
             <h4>{product.name}</h4>
 

@@ -25,6 +25,7 @@ import RequireAdmin from "./components/requireAdmin.jsx";
 import AdminDashboard from "./admin/dashboard.jsx";
 import AdminProducts from "./admin/products.jsx";
 import Orders from "./pages/orders.jsx";
+import EditProduct from "./pages/EditProduct";
 
 function App() {
   const location = useLocation();
@@ -53,6 +54,7 @@ function App() {
         <Route path="/report-problem" element={<ReportProblem />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/seller/edit/:id" element={<EditProduct />} />
 
         <Route
           path="/admin/*"
