@@ -1,55 +1,73 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import "./sidebar.css";
-export default function AdminSidebar() {
-  const navigate = useNavigate();
+import { NavLink, Link } from "react-router-dom";
 
+import "./sidebar.css";
+
+export default function AdminSidebar() {
   return (
     <aside className="admin-sidebar">
-      {" "}
+
       <div className="admin-sidebar-top">
-        {" "}
-        <h2 className="admin-logo">Reshelf</h2>{" "}
+
+        {/* CLICKABLE RESHELF LOGO */}
+        <Link to="/" className="admin-logo">
+          ReShelf
+        </Link>
+
         <nav className="admin-nav">
-          {" "}
+
+          {/* DASHBOARD */}
           <NavLink
             to="/admin"
             end
             className={({ isActive }) =>
-              isActive ? "admin-nav-link active" : "admin-nav-link"
+              isActive
+                ? "admin-nav-link active"
+                : "admin-nav-link"
             }
           >
-            {" "}
-            Dashboard{" "}
-          </NavLink>{" "}
+            Dashboard
+          </NavLink>
+
+          {/* PRODUCTS */}
           <NavLink
             to="/admin/products"
             className={({ isActive }) =>
-              isActive ? "admin-nav-link active" : "admin-nav-link"
+              isActive
+                ? "admin-nav-link active"
+                : "admin-nav-link"
             }
           >
-            {" "}
-            Products{" "}
-          </NavLink>{" "}
+            Products
+          </NavLink>
+
+          {/* ORDERS */}
           <NavLink
             to="/admin/orders"
             className={({ isActive }) =>
-              isActive ? "admin-nav-link active" : "admin-nav-link"
+              isActive
+                ? "admin-nav-link active"
+                : "admin-nav-link"
             }
           >
-            {" "}
-            Orders{" "}
-          </NavLink>{" "}
+            Orders
+          </NavLink>
+
+          {/* PRODUCTS TO REVIEW */}
           <NavLink
             to="/admin/review"
             className={({ isActive }) =>
-              isActive ? "admin-nav-link active" : "admin-nav-link"
+              isActive
+                ? "admin-nav-link active"
+                : "admin-nav-link"
             }
           >
-            {" "}
-            Products to Review{" "}
-          </NavLink>{" "}
-        </nav>{" "}
-      </div>{" "}
+            Products to Review
+          </NavLink>
+
+        </nav>
+
+      </div>
+
     </aside>
   );
 }

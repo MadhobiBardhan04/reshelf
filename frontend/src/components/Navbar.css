@@ -306,3 +306,107 @@
     right: -5px;
   }
 }
+
+/* =====================================================
+   ADMIN PROFILE DROPDOWN
+   ===================================================== */
+
+.admin_profile_dropdown {
+  width: 310px;
+}
+
+
+/* Admin menu buttons */
+
+.admin_profile_dropdown .profile_dropdown_menu {
+  padding: 8px 0;
+}
+
+.admin_profile_dropdown .profile_dropdown_menu button {
+  height: 48px;
+  padding: 0 20px;
+
+  font-size: 15px;
+
+  gap: 13px;
+}
+
+
+/* Admin icons */
+
+.admin_profile_dropdown .profile_dropdown_menu button svg {
+  width: 18px;
+  height: 18px;
+
+  color: var(--color-deep);
+}
+
+
+/* Hover */
+
+.admin_profile_dropdown .profile_dropdown_menu button:hover {
+  background: #eef7fb;
+
+  color: var(--color-deep);
+}
+
+
+/* Admin profile header */
+
+.admin_profile_dropdown .profile_dropdown_header {
+  padding: 18px 20px;
+}
+
+
+/* Admin avatar */
+
+.admin_profile_dropdown .profile_dropdown_avatar {
+  width: 46px;
+  height: 46px;
+
+  background: #e8f4f8;
+
+  color: var(--color-deep);
+
+  font-size: 18px;
+}
+
+
+/* Admin name */
+
+.admin_profile_dropdown .profile_dropdown_user h3 {
+  font-size: 17px;
+}
+
+
+/* Admin email */
+
+.admin_profile_dropdown .profile_dropdown_user p {
+  font-size: 12px;
+}
+
+
+/* Admin logout */
+
+.admin_profile_dropdown .profile_dropdown_logout {
+  padding: 8px 0;
+}
+
+.admin_profile_dropdown .profile_dropdown_logout button {
+  height: 46px;
+
+  padding: 0 20px;
+
+  font-size: 15px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .admin_profile_dropdown {
+    width: 280px;
+
+    right: -5px;
+  }
+}

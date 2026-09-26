@@ -11,10 +11,22 @@
   font-family: "Outfit", sans-serif;
 }
 .admin-logo {
-  margin: 0 0 40px;
-  padding: 0 12px;
-  font-size: 22px;
-  font-weight: 600;
+  display: block;
+
+  font-family: "Outfit", sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+
+  color: var(--color-deep);
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.admin-logo:hover {
+  color: var(--color-deep);
+  text-decoration: none;
 }
 .admin-nav {
   display: flex;

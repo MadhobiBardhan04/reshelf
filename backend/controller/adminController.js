@@ -150,3 +150,76 @@ export const updateOrderStatus = async (req, res) => {
     });
   }
 };
+
+export const getDashboardStats = async (req, res) => {
+  try {
+    // Total counts
+    const totalUsers = await User.countDocuments();
+    const totalProducts = await Product.countDocuments();
+    const totalOrders = await Order.countDocuments();
+
+    // Orders grouped by month
+    const monthlyOrders = await Order.aggregate([
+      {
+        $match: {
+          createdAt: { $exists: true },
+        },
+      },
+
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+          },
+
+          orders: {
+            $sum: 1,
+          },
+        },
+      },
+
+      {
+        $sort: {
+          "_id.year": 1,
+          "_id.month": 1,
+        },
+      },
+    ]);
+
+    // Convert month number to month name
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const orderStatistics = monthlyOrders.map((item) => ({
+      month: monthNames[item._id.month - 1],
+      year: item._id.year,
+      orders: item.orders,
+    }));
+
+    res.status(200).json({
+      totalUsers,
+      totalProducts,
+      totalOrders,
+      orderStatistics,
+    });
+  } catch (error) {
+    console.error("Dashboard statistics error:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch dashboard statistics",
+    });
+  }
+};
