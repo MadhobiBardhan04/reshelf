@@ -1,4 +1,4 @@
-*/ayesha auth.css*/ .auth {
+.auth {
   width: 100%;
   min-height: 100vh;
   margin-top: 0;
@@ -37,7 +37,7 @@
 
 .Big_box {
   margin-top: 0; /* remove old margin-top, centering handles vertical position now */
-  min-height: 530px;
+  min-height: 450px;
   width: 400px;
   max-width: 100%; /* shrinks to fit on narrow screens instead of overflowing */
   box-sizing: border-box;

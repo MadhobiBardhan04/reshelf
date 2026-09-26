@@ -132,9 +132,7 @@ export default function CategoryPage() {
     <div className="category_page">
       <h1>{categoryName}</h1>
 
-      <p>
-        Browse available {categoryName.toLowerCase()} on Reshelf.
-      </p>
+      <p>Browse available {categoryName.toLowerCase()} on Reshelf.</p>
 
       <div className="related_categories">
         <p>Related categories</p>
@@ -172,7 +170,7 @@ export default function CategoryPage() {
               key={product._id}
             >
               <img
-                src={product.images[0].url}
+                src={product.image || "/placeholder.png"}
                 alt={product.name}
               />
 
@@ -188,4 +186,3 @@ export default function CategoryPage() {
     </div>
   );
 }
-

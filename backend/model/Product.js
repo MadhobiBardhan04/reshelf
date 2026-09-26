@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
-
+import {
+  getProducts,
+  getProductsByCategory,
+  getProductById,
+  createProduct,
+  getMyProducts,
+  updateProduct,
+  deleteProduct,
+  updateProductStatus,
+} from "../controller/productController.js";
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -24,7 +33,7 @@ const productSchema = new mongoose.Schema(
 
     subcategory: {
       type: String,
-      required: true,
+      default: "",
     },
 
     image: {
@@ -46,6 +55,12 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["available", "sold"],
+      default: "available",
     },
   },
   {
