@@ -1,14 +1,19 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext.jsx";
 import { groupSeller } from "../utils/groupSeller.js";
 import "./cart.css";
+import "./sell.css";
 
 export default function Cart() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true",
+  );
   const navigate = useNavigate();
   const { cartItems, toggleChecked, removeFromCart, toggleAll, checkedItems } =
     useCart();
 
-  if (cartItems.length === 0) {
+  if (isLoggedIn && cartItems.length === 0) {
     return (
       <div className="cart">
         <div className="cart_empty">
@@ -27,7 +32,17 @@ export default function Cart() {
     (sum, item) => sum + item.product.price,
     0,
   );
+  if (!isLoggedIn) {
+    return (
+      <div className="not_signin">
+        <h2>Sign in to view your cart</h2>
 
+        <Link to="/auth" className="sell_sign_in_btn">
+          Sign in
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="cart_page">
       <h1>My Cart</h1>

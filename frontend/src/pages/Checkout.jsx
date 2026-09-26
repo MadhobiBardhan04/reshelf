@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext.jsx";
 import { groupSeller } from "../utils/groupSeller.js";
+
 import "./checkout.css";
 
 const DELIVERY_INSIDE = 80;
@@ -9,7 +10,7 @@ const DELIVERY_OUTSIDE = 120;
 
 export default function Checkout() {
   const navigate = useNavigate();
-  const { checkedItems } = useCart();
+  const { checkedItems, clearCart, refreshCart } = useCart();
   const [location, setLocation] = useState("inside");
   const [city, setCity] = useState("");
   const [road, setRoad] = useState("");
@@ -37,22 +38,46 @@ export default function Checkout() {
   );
   const total = subtotal + totalDelivery;
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (!city || !road || !house) {
       alert("Please fill in your address.");
       return;
     }
 
-    console.log({
-      location,
-      city,
-      road,
-      house,
-      note,
-      subtotal,
-      totalDelivery,
-      total,
-    });
+    try {
+      const response = await fetch("http://localhost:4000/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+
+        body: JSON.stringify({
+          items: checkedItems.map(({ product }) => product._id),
+
+          deliveryLocation: location,
+
+          address: {
+            city,
+            road,
+            house,
+            note,
+          },
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log("Order created:", data.order);
+
+      alert("Order placed successfully!");
+      refreshCart();
+      navigate("/orders");
+    } catch (error) {
+      console.error("Place order error:", error);
+
+      alert("Something went wrong while placing your order.");
+    }
   };
 
   return (

@@ -3,7 +3,12 @@ import cloudinary from "../config/cloudinary.js";
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
+    const products = await Product.find({
+      $or: [
+        { availabilityStatus: "available" },
+        { availabilityStatus: { $exists: false } },
+      ],
+    }).sort({ createdAt: -1 });
 
     res.status(200).json(products);
   } catch (error) {

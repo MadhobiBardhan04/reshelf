@@ -2,22 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./sidebar.css";
 export default function AdminSidebar() {
   const navigate = useNavigate();
-  const handleLogout = async () => {
-    try {
-      await fetch("http://localhost:4000/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-    } catch (error) {
-      console.error("Logout request failed:", error);
-    }
 
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("user");
-
-    navigate("/");
-    window.location.reload();
-  };
   return (
     <aside className="admin-sidebar">
       {" "}
@@ -65,10 +50,6 @@ export default function AdminSidebar() {
           </NavLink>{" "}
         </nav>{" "}
       </div>{" "}
-      <button className="admin-logout" onClick={handleLogout}>
-        {" "}
-        Log Out{" "}
-      </button>{" "}
     </aside>
   );
 }

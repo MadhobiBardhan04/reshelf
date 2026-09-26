@@ -10,6 +10,7 @@ import cors from "cors";
 import productRoutes from "./routes/products.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -49,6 +50,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/orders", orderRoutes);
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });

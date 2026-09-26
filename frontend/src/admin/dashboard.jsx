@@ -1,5 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import AdminSidebar from "./sidebar.jsx";
+import AdminProducts from "./products.jsx";
+import AdminOrders from "./orders.jsx";
+
 import "./dashboard.css";
 function DashboardHome() {
   return (
@@ -34,17 +37,38 @@ function ProductsToReview() {
   );
 }
 export default function AdminDashboard() {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:4000/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout request failed:", error);
+    }
+
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <div className="admin-layout">
       {" "}
-      <AdminSidebar />{" "}
+      <AdminSidebar />
       <main className="admin-main">
-        {" "}
+        <div className="admin-topbar">
+          <button className="admin-top-logout" onClick={handleLogout}>
+            Log Out
+          </button>
+        </div>
         <Routes>
           {" "}
           <Route index element={<DashboardHome />} />{" "}
-          <Route path="products" element={<Products />} />{" "}
-          <Route path="orders" element={<Orders />} />{" "}
+          <Route path="products" element={<AdminProducts />} />{" "}
+          <Route path="orders" element={<AdminOrders />} />
           <Route path="review" element={<ProductsToReview />} />{" "}
         </Routes>{" "}
       </main>{" "}

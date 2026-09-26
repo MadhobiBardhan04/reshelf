@@ -47,6 +47,11 @@ const productSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    availabilityStatus: {
+      type: String,
+      enum: ["available", "sold"],
+      default: "available",
+    },
   },
   {
     timestamps: true,

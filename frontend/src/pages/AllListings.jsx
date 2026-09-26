@@ -31,8 +31,11 @@ export default function AllListings() {
             key={product._id}
           >
             <img
-              src={product.images[0].url}
+              src={
+                product.images?.[0]?.url || product.image || "/placeholder.png"
+              }
               alt={product.name}
+              key={product._id}
             />
 
             <h4>{product.name}</h4>

@@ -14,6 +14,13 @@ export default function ProductDetails() {
   const [activeImage, setActiveImage] = useState(0);
   const [activeTab, setActiveTab] = useState("Description");
   const [loading, setLoading] = useState(true);
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setShowAddedMessage(true);
+    setTimeout(() => setShowAddedMessage(false), 2000);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/products/${id}`)
@@ -106,9 +113,10 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        <button className="pd_add_btn" onClick={() => addToCart(product)}>
+        <button className="pd_add_btn" onClick={handleAddToCart}>
           Add to cart
         </button>
+        {showAddedMessage && <p className="pd_added_msg">Added to cart!</p>}
 
         <div className="pd_tabs_section">
           <div className="pd_tabs">

@@ -59,6 +59,19 @@ export function CartProvider({ children }) {
     }
   };
 
+  const refreshCart = () => {
+    fetch(API_URL, { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        const items = (data.items || []).map((i) => ({
+          product: i.product,
+          checked: true,
+        }));
+        setCartItems(items);
+      })
+      .catch((error) => console.error("Failed to refresh cart:", error));
+  };
+
   const toggleChecked = (productId) => {
     setCartItems((prev) =>
       prev.map((item) =>
@@ -85,6 +98,7 @@ export function CartProvider({ children }) {
         addToCart,
         removeFromCart,
         toggleChecked,
+        refreshCart,
         toggleAll,
         clearCart,
         checkedItems,

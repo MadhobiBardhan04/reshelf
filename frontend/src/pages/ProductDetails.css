@@ -257,7 +257,22 @@
   text-align: center;
   padding: 4rem;
 }
-
+.pd_added_msg {
+  color: var(--color-deep);
+  font-weight: 600;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @media (max-width: 800px) {
   .product_details {
     width: 100%;

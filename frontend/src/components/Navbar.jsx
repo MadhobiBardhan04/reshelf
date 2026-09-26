@@ -25,7 +25,7 @@ export default function Navbar() {
 
   const storedUser = localStorage.getItem("user");
 
-  const { clearCart } = useCart();
+  const { clearCart, cartItems } = useCart();
 
   let user = null;
 
@@ -69,6 +69,9 @@ export default function Navbar() {
       <div className="nav_actions">
         <button className="cart_btn" onClick={() => navigate("/cart")}>
           <FaShoppingCart />
+          {cartItems.length > 0 && (
+            <span className="cart_badge">{cartItems.length}</span>
+          )}
         </button>
         <button className="sell_btn" onClick={() => navigate("/sell")}>
           Sell
@@ -125,12 +128,25 @@ export default function Navbar() {
                     onClick={() => {
                       setShowProfile(false);
 
-                      navigate("/favorites");
+                      navigate("/favourites");
                     }}
                   >
                     <FaHeart />
 
-                    <span>My Favorites</span>
+                    <span>Favourites</span>
+
+                    <small>0</small>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowProfile(false);
+
+                      navigate("/orders");
+                    }}
+                  >
+                    <FaShoppingCart />
+
+                    <span>Orders</span>
 
                     <small>0</small>
                   </button>

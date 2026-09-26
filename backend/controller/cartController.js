@@ -1,10 +1,23 @@
 import Cart from "../model/cart.js";
 
 export const getCart = async (req, res) => {
-  const cart = await Cart.findOne({ user: req.user.id }).populate(
-    "items.product",
-  );
-  res.status(200).json(cart || { items: [] });
+  try {
+    const cart = await Cart.findOne({ user: req.user.id }).populate(
+      "items.product",
+    );
+
+    if (!cart) return res.status(200).json({ items: [] });
+
+    // filter out items whose product no longer exists or isn't available
+    const validItems = cart.items.filter(
+      (item) => item.product && item.product.availabilityStatus !== "sold",
+    );
+
+    res.status(200).json({ ...cart.toObject(), items: validItems });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to get cart" });
+  }
 };
 
 export const addToCart = async (req, res) => {
