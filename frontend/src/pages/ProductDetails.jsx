@@ -106,6 +106,7 @@ export default function ProductDetails() {
     description,
     image,
     status,
+    seller,
   } = product;
 
   return (
@@ -188,7 +189,7 @@ export default function ProductDetails() {
           </div>
 
           <div>
-            <p className="pd_seller_name">Sunny Sky</p>
+            <p>{product.seller?.displayName || "Unknown seller"}</p>
             <p className="pd_seller_sub">Seller</p>
           </div>
         </div>

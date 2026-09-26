@@ -51,8 +51,36 @@ export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
       .populate("buyer", "username displayName email")
-      .populate("items.product", "name price image category seller")
+      .populate(
+        "items.product",
+        "name price image category condition seller sellerAddress",
+      )
+      .populate("items.seller", "username displayName email")
       .sort({ createdAt: -1 });
+
+    // Fill seller information for old orders
+    for (const order of orders) {
+      for (const item of order.items) {
+        if (!item.seller && item.product?.seller) {
+          item.seller = item.product.seller;
+        }
+
+        if (!item.sellerAddress && item.product?.sellerAddress) {
+          item.sellerAddress = item.product.sellerAddress;
+        }
+
+        // Populate the seller manually if necessary
+        if (item.product?.seller && !item.seller?.displayName) {
+          const seller = await User.findById(item.product.seller).select(
+            "username displayName email",
+          );
+
+          if (seller) {
+            item.seller = seller;
+          }
+        }
+      }
+    }
 
     res.status(200).json({
       orders,
@@ -87,27 +115,28 @@ export const updateOrderStatus = async (req, res) => {
       });
     }
 
-    // If order is being cancelled,
-    // make its products available again.
-    if (status === "cancelled" && order.status !== "cancelled") {
-      const productIds = order.items.map((item) => item.product);
+    for (const item of order.items) {
+      if (!item.seller && item.product) {
+        const product = await Product.findById(item.product);
 
-      await Product.updateMany(
-        { _id: { $in: productIds } },
-        {
-          $set: {
-            availabilityStatus: "available",
-          },
-        },
-      );
+        if (product?.seller) {
+          item.seller = product.seller;
+
+          if (product.sellerAddress) {
+            item.sellerAddress = product.sellerAddress;
+          }
+        }
+      }
     }
 
     order.status = status;
+
     await order.save();
 
     const updatedOrder = await Order.findById(order._id)
       .populate("buyer", "username displayName email")
-      .populate("items.product", "name price image category condition");
+      .populate("items.product", "name price image category condition")
+      .populate("items.seller", "username displayName email");
 
     res.status(200).json({
       message: "Order status updated",
@@ -117,7 +146,7 @@ export const updateOrderStatus = async (req, res) => {
     console.error("Update order status error:", error);
 
     res.status(500).json({
-      message: "Failed to update order status",
+      message: error.message || "Failed to update order status",
     });
   }
 };

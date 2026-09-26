@@ -14,24 +14,39 @@ export const createOrder = async (req, res) => {
     }
 
     if (!["inside", "outside"].includes(deliveryLocation)) {
-      return res.status(400).json({ message: "Invalid delivery location." });
+      return res.status(400).json({
+        message: "Invalid delivery location.",
+      });
     }
 
     if (!address?.city || !address?.road || !address?.house) {
-      return res
-        .status(400)
-        .json({ message: "Complete delivery address is required." });
+      return res.status(400).json({
+        message: "Complete delivery address is required.",
+      });
     }
 
-    // fetch the actual product documents for the selected item IDs
-    const products = await Product.find({ _id: { $in: items } });
+    // Fetch the actual products from the database
+    const products = await Product.find({
+      _id: { $in: items },
+    });
 
+    const ownProduct = products.find(
+      (product) =>
+        product.seller && product.seller.toString() === req.user.id.toString(),
+    );
+
+    if (ownProduct) {
+      return res.status(400).json({
+        message: `You cannot buy your own product: ${ownProduct.name}.`,
+      });
+    }
     if (products.length !== items.length) {
-      return res
-        .status(400)
-        .json({ message: "One or more products could not be found." });
+      return res.status(400).json({
+        message: "One or more products could not be found.",
+      });
     }
 
+    // Make sure none of the products have already been sold
     const unavailableProduct = products.find(
       (product) => product.availabilityStatus === "sold",
     );
@@ -49,41 +64,67 @@ export const createOrder = async (req, res) => {
         product.seller ? product.seller.toString() : "null",
       ),
     );
+
     const sellerCount = sellerIds.size;
 
     const deliveryPerSeller =
       deliveryLocation === "inside" ? DELIVERY_INSIDE : DELIVERY_OUTSIDE;
+
     const deliveryFee = sellerCount * deliveryPerSeller;
     const total = subtotal + deliveryFee;
 
     const order = await Order.create({
       buyer: req.user.id,
+
       items: products.map((product) => ({
         product: product._id,
         priceAtPurchase: product.price,
+
+        // Seller information for this specific product
+        seller: product.seller,
+
+        // Seller's pickup address for this specific product
+        sellerAddress: product.sellerAddress,
       })),
+
       deliveryLocation,
+
       address: {
         city: address.city,
         road: address.road,
         house: address.house,
         note: address.note || "",
       },
+
       deliveryFee,
       total,
       status: "pending",
     });
 
+    // Make the products unavailable
     await Product.updateMany(
-      { _id: { $in: products.map((product) => product._id) } },
-      { $set: { availabilityStatus: "sold" } },
+      {
+        _id: {
+          $in: products.map((product) => product._id),
+        },
+      },
+      {
+        $set: {
+          availabilityStatus: "sold",
+        },
+      },
     );
 
+    // Remove the ordered products from the buyer's cart
     await Cart.findOneAndUpdate(
       { user: req.user.id },
       {
         $pull: {
-          items: { product: { $in: products.map((product) => product._id) } },
+          items: {
+            product: {
+              $in: products.map((product) => product._id),
+            },
+          },
         },
       },
     );
@@ -94,10 +135,12 @@ export const createOrder = async (req, res) => {
     });
   } catch (error) {
     console.error("Create order error:", error);
-    res.status(500).json({ message: "Failed to place order." });
+
+    res.status(500).json({
+      message: "Failed to place order.",
+    });
   }
 };
-
 export const getMyOrders = async (req, res) => {
   try {
     const orders = await Order.find({ buyer: req.user.id })

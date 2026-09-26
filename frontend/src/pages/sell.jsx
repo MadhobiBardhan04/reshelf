@@ -13,6 +13,10 @@ const INITIAL_FORM = {
   condition: "",
   specs: "",
   description: "",
+  sellerCity: "",
+  sellerRoad: "",
+  sellerHouse: "",
+  sellerNote: "",
 };
 
 export default function Sell() {
@@ -91,7 +95,10 @@ export default function Sell() {
       !form.category ||
       !form.price ||
       !form.condition ||
-      !form.specs.trim()
+      !form.specs.trim() ||
+      !form.sellerCity.trim() ||
+      !form.sellerRoad.trim() ||
+      !form.sellerHouse.trim()
     ) {
       setErrorMessage("Please fill in all required fields.");
       return;
@@ -114,6 +121,10 @@ export default function Sell() {
     formData.append("subcategory", form.category);
     formData.append("price", form.price);
     formData.append("condition", form.condition);
+    formData.append("sellerCity", form.sellerCity.trim());
+    formData.append("sellerRoad", form.sellerRoad.trim());
+    formData.append("sellerHouse", form.sellerHouse.trim());
+    formData.append("sellerNote", form.sellerNote.trim());
 
     const fullDescription = [
       `Specifications: ${form.specs.trim()}`,
@@ -292,6 +303,57 @@ export default function Sell() {
           />
           <span className="char_count">{form.description.length}/150</span>
         </label>
+        <div className="seller_address_section">
+          <h3>Pickup Address</h3>
+
+          <p className="seller_address_description">
+            This is the address where the item can be picked up.
+          </p>
+
+          <div className="seller_address_grid">
+            <label>
+              City *
+              <input
+                type="text"
+                value={form.sellerCity}
+                onChange={handleChange("sellerCity")}
+                placeholder="Enter city"
+                required
+              />
+            </label>
+
+            <label>
+              Road *
+              <input
+                type="text"
+                value={form.sellerRoad}
+                onChange={handleChange("sellerRoad")}
+                placeholder="Enter road"
+                required
+              />
+            </label>
+
+            <label>
+              House *
+              <input
+                type="text"
+                value={form.sellerHouse}
+                onChange={handleChange("sellerHouse")}
+                placeholder="Enter house / building"
+                required
+              />
+            </label>
+          </div>
+
+          <label>
+            Additional information
+            <textarea
+              value={form.sellerNote}
+              onChange={handleChange("sellerNote")}
+              placeholder="Landmark, floor, delivery instructions, etc."
+            />
+          </label>
+        </div>
 
         <div className="sell_image">
           <span className="image_label">

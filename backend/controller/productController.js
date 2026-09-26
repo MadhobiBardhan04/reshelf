@@ -8,7 +8,9 @@ export const getProducts = async (req, res) => {
         { availabilityStatus: "available" },
         { availabilityStatus: { $exists: false } },
       ],
-    }).sort({ createdAt: -1 });
+    })
+      .populate("seller", "username displayName email")
+      .sort({ createdAt: -1 });
 
     res.status(200).json(products);
   } catch (error) {
@@ -24,8 +26,11 @@ export const getProductsByCategory = async (req, res) => {
   try {
     const products = await Product.find({
       category: req.params.category,
-      status: "available",
-    });
+      $or: [
+        { availabilityStatus: "available" },
+        { availabilityStatus: { $exists: false } },
+      ],
+    }).sort({ createdAt: -1 });
 
     res.status(200).json(products);
   } catch (error) {
@@ -39,7 +44,10 @@ export const getProductsByCategory = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate(
+      "seller",
+      "displayName",
+    );
 
     if (!product) {
       return res.status(404).json({
@@ -63,8 +71,18 @@ export const createProduct = async (req, res) => {
     console.log("BODY:", req.body);
     console.log("FILE:", req.file ? req.file.originalname : "NO FILE");
     console.log("USER:", req.user);
-    const { name, category, subcategory, price, condition, description } =
-      req.body;
+    const {
+      name,
+      category,
+      subcategory,
+      price,
+      condition,
+      description,
+      sellerCity,
+      sellerRoad,
+      sellerHouse,
+      sellerNote,
+    } = req.body;
 
     if (!req.file) {
       return res.status(400).json({
@@ -101,6 +119,13 @@ export const createProduct = async (req, res) => {
       image: uploadResult.secure_url,
       cloudinaryPublicId: uploadResult.public_id,
       seller: req.user.id,
+
+      sellerAddress: {
+        city: sellerCity,
+        road: sellerRoad,
+        house: sellerHouse,
+        note: sellerNote || "",
+      },
     });
     console.log("PRODUCT SAVED:", product);
     res.status(201).json({
@@ -250,7 +275,7 @@ export const updateProductStatus = async (req, res) => {
       });
     }
 
-    product.status = status;
+    product.availabilityStatus = status;
     await product.save();
 
     res.status(200).json({

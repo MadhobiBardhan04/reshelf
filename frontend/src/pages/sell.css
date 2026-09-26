@@ -205,7 +205,49 @@
   text-align: center;
   margin-top: 150px;
 }
+.seller_address_section {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #e2e8eb;
+  border-radius: 10px;
+  background: #fafcfd;
+}
 
+.seller_address_section h3 {
+  margin: 0 0 5px;
+  font-family: var(--font-display);
+  color: var(--color-navy);
+}
+
+.seller_address_description {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: #777;
+}
+
+.seller_address_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.seller_address_section label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.seller_address_section input,
+.seller_address_section textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  .seller_address_grid {
+    grid-template-columns: 1fr;
+  }
+}
 .sell_sign_in_btn {
   display: inline-flex;
   align-items: center;

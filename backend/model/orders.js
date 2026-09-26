@@ -19,6 +19,17 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+
+      sellerAddress: {
+        city: String,
+        road: String,
+        house: String,
+        note: String,
+      },
     },
   ],
 

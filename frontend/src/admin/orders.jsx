@@ -54,6 +54,10 @@ export default function AdminOrders() {
       const data = await response.json();
 
       if (!response.ok) {
+        console.log("STATUS UPDATE RESPONSE:", data);
+        console.log("ORDER ID:", orderId);
+        console.log("NEW STATUS:", status);
+
         alert(data.message || "Failed to update order.");
         return;
       }
@@ -257,22 +261,22 @@ export default function AdminOrders() {
 
                     <p>
                       <strong>City:</strong>{" "}
-                      {selectedProduct.pickupAddress?.city || "-"}
+                      {selectedProduct.sellerAddress?.city || "-"}
                     </p>
 
                     <p>
                       <strong>Road:</strong>{" "}
-                      {selectedProduct.pickupAddress?.road || "-"}
+                      {selectedProduct.sellerAddress?.road || "-"}
                     </p>
 
                     <p>
                       <strong>House:</strong>{" "}
-                      {selectedProduct.pickupAddress?.house || "-"}
+                      {selectedProduct.sellerAddress?.house || "-"}
                     </p>
 
                     <p>
                       <strong>Note:</strong>{" "}
-                      {selectedProduct.pickupAddress?.note || "-"}
+                      {selectedProduct.sellerAddress?.note || "-"}
                     </p>
                   </div>
                 </div>

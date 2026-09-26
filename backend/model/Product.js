@@ -56,6 +56,24 @@ const productSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    sellerAddress: {
+      city: {
+        type: String,
+        required: true,
+      },
+      road: {
+        type: String,
+        required: true,
+      },
+      house: {
+        type: String,
+        required: true,
+      },
+      note: {
+        type: String,
+        default: "",
+      },
+    },
     availabilityStatus: {
       type: String,
       enum: ["available", "sold"],
