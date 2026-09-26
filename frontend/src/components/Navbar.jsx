@@ -128,12 +128,12 @@ export default function Navbar() {
                     onClick={() => {
                       setShowProfile(false);
 
-                      navigate("/favourites");
+                      navigate("/Favorites");
                     }}
                   >
                     <FaHeart />
 
-                    <span>Favourites</span>
+                    <span>Favorites</span>
 
                     <small>0</small>
                   </button>
