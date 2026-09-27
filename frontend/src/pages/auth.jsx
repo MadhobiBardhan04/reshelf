@@ -326,13 +326,13 @@ export default function Auth() {
             <h6>────────────── or continue with ──────────────</h6>
           </div>
           <div className="btn3">
-            <button onClick={handleGoogleLogin} disabled={loading}>
+            {/* <button onClick={handleGoogleLogin} disabled={loading}>
               <FcGoogle className="social-icon" />
 
               <span>
                 {isSignUp ? "Sign Up with Google" : "Sign In with Google"}
               </span>
-            </button>
+            </button>*/}
           </div>
           <div className="heading4">
             {isSignUp ? (

@@ -21,7 +21,7 @@ import "./Navbar.css";
 export default function Navbar() {
   const navigate = useNavigate();
 
-   const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = () => {
     const trimmed = searchQuery.trim();
@@ -31,7 +31,7 @@ export default function Navbar() {
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn") === "true"
+    localStorage.getItem("isLoggedIn") === "true",
   );
 
   const [showProfile, setShowProfile] = useState(false);
@@ -53,18 +53,12 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await fetch(
-        "http://localhost:4000/api/auth/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      await fetch("http://localhost:4000/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
     } catch (error) {
-      console.error(
-        "Logout request failed:",
-        error
-      );
+      console.error("Logout request failed:", error);
     }
 
     localStorage.removeItem("isLoggedIn");
@@ -86,15 +80,11 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-
-      <Link
-        to="/"
-        className="logo-link"
-      >
+      <Link to="/" className="logo-link">
         ReShelf
       </Link>
 
-            <div className="SearchBar_header1">
+      <div className="SearchBar_header1">
         <FaSearch
           className="Search_icon_0"
           onClick={handleSearch}
@@ -113,91 +103,59 @@ export default function Navbar() {
       </div>
 
       <div className="nav_actions">
-
         {/* CART */}
 
-        <button
-          className="cart_btn"
-          onClick={() => navigate("/cart")}
-        >
+        <button className="cart_btn" onClick={() => navigate("/cart")}>
           <FaShoppingCart />
 
           {cartItems.length > 0 && (
-            <span className="cart_badge">
-              {cartItems.length}
-            </span>
+            <span className="cart_badge">{cartItems.length}</span>
           )}
         </button>
 
-
         {/* SELL */}
 
-        <button
-          className="sell_btn"
-          onClick={() => navigate("/sell")}
-        >
+        <button className="sell_btn" onClick={() => navigate("/sell")}>
           Sell
         </button>
 
         {isLoggedIn ? (
-
           <div className="profile_container">
-
             {/* PROFILE BUTTON */}
 
             <button
               className={`profile_btn ${
-                showProfile
-                  ? "profile_btn_active"
-                  : ""
+                showProfile ? "profile_btn_active" : ""
               }`}
-              onClick={() =>
-                setShowProfile(!showProfile)
-              }
+              onClick={() => setShowProfile(!showProfile)}
             >
               <FaUser />
             </button>
 
             {showProfile && (
-
               <div
-  className={`profile_dropdown ${
-    isAdmin ? "admin_profile_dropdown" : ""
-  }`}
->
-
-
+                className={`profile_dropdown ${
+                  isAdmin ? "admin_profile_dropdown" : ""
+                }`}
+              >
                 <div className="profile_dropdown_header">
-
                   <div className="profile_dropdown_avatar">
                     <FaUser />
                   </div>
 
-
                   <div className="profile_dropdown_user">
-
                     <h3>
                       {isAdmin
                         ? "ReShelf Admin"
-                        : user?.displayName ||
-                          user?.username ||
-                          "User"}
+                        : user?.displayName || user?.username || "User"}
                     </h3>
 
-                    <p>
-                      {user?.email ||
-                        "No email available"}
-                    </p>
-
+                    <p>{user?.email || "No email available"}</p>
                   </div>
-
                 </div>
 
-
                 {isAdmin ? (
-
                   <div className="profile_dropdown_menu">
-
                     {/* DASHBOARD */}
 
                     <button
@@ -209,11 +167,8 @@ export default function Navbar() {
                     >
                       <FaTachometerAlt />
 
-                      <span>
-                        Dashboard
-                      </span>
+                      <span>Dashboard</span>
                     </button>
-
 
                     {/* PRODUCTS */}
 
@@ -221,18 +176,13 @@ export default function Navbar() {
                       onClick={() => {
                         closeProfile();
 
-                        navigate(
-                          "/admin/products"
-                        );
+                        navigate("/admin/products");
                       }}
                     >
                       <FaBoxOpen />
 
-                      <span>
-                        Products
-                      </span>
+                      <span>Products</span>
                     </button>
-
 
                     {/* ORDERS */}
 
@@ -240,26 +190,16 @@ export default function Navbar() {
                       onClick={() => {
                         closeProfile();
 
-                        navigate(
-                          "/admin/orders"
-                        );
+                        navigate("/admin/orders");
                       }}
                     >
                       <FaShoppingCart />
 
-                      <span>
-                        Orders
-                      </span>
+                      <span>Orders</span>
                     </button>
-
-
                   </div>
-
                 ) : (
-
-
                   <div className="profile_dropdown_menu">
-
                     {/* MY PROFILE */}
 
                     <button
@@ -271,11 +211,8 @@ export default function Navbar() {
                     >
                       <FaUser />
 
-                      <span>
-                        My Profile
-                      </span>
+                      <span>My Profile</span>
                     </button>
-
 
                     {/* MY LISTINGS */}
 
@@ -288,15 +225,8 @@ export default function Navbar() {
                     >
                       <FaBoxOpen />
 
-                      <span>
-                        My Listings
-                      </span>
-
-                      <small>
-                        4
-                      </small>
+                      <span>My Listings</span>
                     </button>
-
 
                     {/* FAVORITES */}
 
@@ -309,15 +239,8 @@ export default function Navbar() {
                     >
                       <FaHeart />
 
-                      <span>
-                        Favorites
-                      </span>
-
-                      <small>
-                        0
-                      </small>
+                      <span>Favorites</span>
                     </button>
-
 
                     {/* ORDERS */}
 
@@ -330,15 +253,8 @@ export default function Navbar() {
                     >
                       <FaShoppingCart />
 
-                      <span>
-                        Orders
-                      </span>
-
-                      <small>
-                        0
-                      </small>
+                      <span>Orders</span>
                     </button>
-
 
                     {/* SETTINGS */}
 
@@ -351,50 +267,27 @@ export default function Navbar() {
                     >
                       <FaCog />
 
-                      <span>
-                        Settings
-                      </span>
+                      <span>Settings</span>
                     </button>
-
                   </div>
-
                 )}
 
-
                 <div className="profile_dropdown_logout">
-
-                  <button
-                    onClick={handleLogout}
-                  >
+                  <button onClick={handleLogout}>
                     <FiLogOut />
 
-                    <span>
-                      Logout
-                    </span>
+                    <span>Logout</span>
                   </button>
-
                 </div>
-
               </div>
-
             )}
-
           </div>
-
         ) : (
-
-
-          <Link
-            to="/auth"
-            className="sign_in_btn"
-          >
+          <Link to="/auth" className="sign_in_btn">
             Sign in
           </Link>
-
         )}
-
       </div>
-
     </nav>
   );
 }

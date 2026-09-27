@@ -31,14 +31,22 @@ export function CartProvider({ children }) {
         body: JSON.stringify({ productId: product._id }),
       });
 
-      if (!res.ok) throw new Error("Failed to add to cart");
+      const data = await res.json();
 
-      const cart = await res.json();
+      if (!res.ok) {
+        alert(data.message || "Failed to add to cart");
+        return;
+      }
+
       setCartItems(
-        cart.items.map((i) => ({ product: i.product, checked: true })),
+        data.items.map((i) => ({
+          product: i.product,
+          checked: true,
+        })),
       );
     } catch (error) {
       console.error("addToCart error:", error);
+      alert("Something went wrong. Please try again.");
     }
   };
 

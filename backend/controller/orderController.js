@@ -48,7 +48,7 @@ export const createOrder = async (req, res) => {
 
     // Make sure none of the products have already been sold
     const unavailableProduct = products.find(
-      (product) => product.availabilityStatus === "sold",
+      (product) => product.status === "sold",
     );
 
     if (unavailableProduct) {
@@ -110,7 +110,7 @@ export const createOrder = async (req, res) => {
       },
       {
         $set: {
-          availabilityStatus: "sold",
+          status: "sold",
         },
       },
     );

@@ -2,10 +2,7 @@ import Product from "../model/Product.js";
 import cloudinary from "../config/cloudinary.js";
 
 const VISIBLE_TO_PUBLIC = {
-  $or: [
-    { approvalStatus: "approved" },
-    { approvalStatus: { $exists: false } },
-  ],
+  $or: [{ approvalStatus: "approved" }, { approvalStatus: { $exists: false } }],
 };
 
 export const getProducts = async (req, res) => {
@@ -13,10 +10,7 @@ export const getProducts = async (req, res) => {
     const products = await Product.find({
       $and: [
         {
-          $or: [
-            { availabilityStatus: "available" },
-            { availabilityStatus: { $exists: false } },
-          ],
+          $or: [{ status: "available" }, { status: { $exists: false } }],
         },
         VISIBLE_TO_PUBLIC,
       ],
@@ -37,10 +31,7 @@ export const getProductsByCategory = async (req, res) => {
       category: req.params.category,
       $and: [
         {
-          $or: [
-            { availabilityStatus: "available" },
-            { availabilityStatus: { $exists: false } },
-          ],
+          status: "available",
         },
         VISIBLE_TO_PUBLIC,
       ],
@@ -49,7 +40,10 @@ export const getProductsByCategory = async (req, res) => {
     res.status(200).json(products);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Failed to get products" });
+
+    res.status(500).json({
+      message: "Failed to get products",
+    });
   }
 };
 
@@ -66,8 +60,7 @@ export const getProductById = async (req, res) => {
 
     const isApproved =
       product.approvalStatus === "approved" || !product.approvalStatus;
-    const isOwner =
-      req.user && req.user.id === product.seller?._id?.toString();
+    const isOwner = req.user && req.user.id === product.seller?._id?.toString();
     const isAdmin = req.user && req.user.role === "admin";
 
     if (!isApproved && !isOwner && !isAdmin) {

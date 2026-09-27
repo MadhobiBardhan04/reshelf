@@ -92,7 +92,12 @@ export default function AdminProducts() {
   };
 
   const counts = useMemo(() => {
-    const result = { pending: 0, approved: 0, rejected: 0, all: products.length };
+    const result = {
+      pending: 0,
+      approved: 0,
+      rejected: 0,
+      all: products.length,
+    };
 
     for (const product of products) {
       const status = product.approvalStatus || "pending";
@@ -134,7 +139,9 @@ export default function AdminProducts() {
             onClick={() => setFilter(item.key)}
           >
             {item.label}
-            <span className="products-filter-count">{counts[item.key] ?? 0}</span>
+            <span className="products-filter-count">
+              {counts[item.key] ?? 0}
+            </span>
           </button>
         ))}
       </div>
@@ -186,17 +193,18 @@ export default function AdminProducts() {
                   <td>৳{product.price?.toLocaleString()}</td>
                   <td>{product.condition}</td>
                   <td>{product.category}</td>
-                  <td>{product.availabilityStatus}</td>
+                  <td>{product.status}</td>
 
                   <td>
                     <span className={`approval-badge ${approvalStatus}`}>
                       {approvalStatus}
                     </span>
-                    {approvalStatus === "rejected" && product.rejectionReason && (
-                      <div className="rejection-reason">
-                        {product.rejectionReason}
-                      </div>
-                    )}
+                    {approvalStatus === "rejected" &&
+                      product.rejectionReason && (
+                        <div className="rejection-reason">
+                          {product.rejectionReason}
+                        </div>
+                      )}
                   </td>
 
                   <td>
@@ -274,7 +282,10 @@ export default function AdminProducts() {
                 Confirm Reject
               </button>
 
-              <button className="cancel-btn" onClick={() => setRejectTarget(null)}>
+              <button
+                className="cancel-btn"
+                onClick={() => setRejectTarget(null)}
+              >
                 Cancel
               </button>
             </div>
